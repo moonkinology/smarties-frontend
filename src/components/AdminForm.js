@@ -204,7 +204,11 @@ function AdminForm() {
             Upload
           </label>
         </div>
-
+        <button type="button" className="btn btn-primary">
+          check image upload status
+        </button>
+        <span className="badge bg-success">Success</span>
+        <span className="badge bg-danger">Danger</span>
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
