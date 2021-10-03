@@ -1,16 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import Carousel from "./components/Carousel";
+import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <React.Fragment>
-      <div className="container">
-        <Carousel />
-      </div>
-    </React.Fragment>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
