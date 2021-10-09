@@ -1,6 +1,154 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+import useFirestore from "../hooks/UseFirestore";
+import { storage, firestore, timestamp } from "../firebase/config";
 
 function AdminForm() {
+  const [formData, setFormData] = useState({
+    platform: "Android",
+    color: "#563d7c",
+    mainCamera: "",
+    frontCamera: "",
+    battery: "",
+    ram: "",
+    displaySize: "",
+    displayResolution: "",
+    displayType: "",
+    height: "",
+    width: "",
+    depth: "",
+    weight: "",
+    priceCategory: 1,
+    brand: "",
+    releaseDate: "",
+    description: "",
+    frontImageURL: "",
+    backImageURL: "",
+  });
+
+  const options = [
+    {
+      label: "Apple",
+      value: "Apple",
+    },
+    {
+      label: "Samsung",
+      value: "Samsung",
+    },
+    {
+      label: "Sony",
+      value: "Sony",
+    },
+    {
+      label: "Honor",
+      value: "Honor",
+    },
+    {
+      label: "Nokia",
+      value: "Nokia",
+    },
+    {
+      label: "RealMe",
+      value: "RealMe",
+    },
+    {
+      label: "Xiaomi",
+      value: "Xiaomi",
+    },
+    {
+      label: "OnePlus",
+      value: "OnePlus",
+    },
+    {
+      label: "Huawei",
+      value: "Huawei",
+    },
+  ];
+
+  const { docs } = useFirestore("images");
+
+  const [firstFile, setFirstFile] = useState(null);
+  const [secondFile, setSecondFile] = useState(null);
+  const [firstFileError, setFirstFileError] = useState(null);
+  const [firstFileUploadError, setFirstFileUploadError] = useState(null);
+  const [secondFileError, setSecondFileError] = useState(null);
+  const [secondFileUploadError, setsecondFileUploadError] = useState(null);
+
+  const types = ["image/png", "image/jpeg"];
+
+  const secondFileChangeHandler = (e) => {
+    let selectedFile = e.target.files[0];
+
+    if (selectedFile && types.includes(selectedFile.type)) {
+      setSecondFile(selectedFile);
+      setFirstFileError(null);
+    } else {
+      setSecondFile(null);
+      setFirstFileError("Please select an image file (png or jpeg)");
+    }
+  };
+
+  const firstFileChangeHandler = (e) => {
+    let selectedFile = e.target.files[0];
+
+    if (selectedFile && types.includes(selectedFile.type)) {
+      setFirstFile(selectedFile);
+      setSecondFileError(null);
+    } else {
+      setFirstFile(null);
+      setSecondFileError("Please select an image file (png or jpeg)");
+    }
+  };
+
+  useEffect(() => {
+    //references
+    const storageRef = secondFile && storage.ref(secondFile.name);
+
+    const collectionRef = firestore.collection("images");
+
+    secondFile &&
+      storageRef.put(secondFile).on(
+        "state_changed",
+        (error) => {
+          setsecondFileUploadError(error);
+        },
+        async () => {
+          const url = await storageRef.getDownloadURL();
+          const createdAt = timestamp();
+          collectionRef.add({ url: url, createdAt: createdAt });
+          setFormData({
+            ...formData,
+            backImageURL: url,
+          });
+        }
+      );
+  }, [secondFile, formData]);
+
+  useEffect(() => {
+    //references
+    const storageRef = firstFile && storage.ref(firstFile.name);
+
+    const collectionRef = firestore.collection("images");
+
+    firstFile &&
+      storageRef.put(firstFile).on(
+        "state_changed",
+        (error) => {
+          setFirstFileUploadError(error);
+        },
+        async () => {
+          const url = await storageRef.getDownloadURL();
+          const createdAt = timestamp();
+          collectionRef.add({ url: url, createdAt: createdAt });
+          setFormData({
+            ...formData,
+            frontImageURL: url,
+          });
+        }
+      );
+  }, [firstFile, formData]);
+
+  console.log(formData);
   return (
     <div>
       <form className="row g-3">
@@ -8,207 +156,390 @@ function AdminForm() {
           <div className="form-check">
             <input
               className="form-check-input"
+              defaultValue={formData.platform}
               type="checkbox"
-              value=""
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  platform: "Android",
+                });
+              }}
               id="platform"
+              checked={formData.platform === "Android"}
             />
-            <label className="form-check-label" for="platform">
+            <label className="form-check-label" htmlFor="platform">
               Android
             </label>
           </div>
+
           <div className="form-check">
             <input
+              checked={formData.platform === "iOS"}
               className="form-check-input"
               type="checkbox"
-              value=""
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  platform: "iOS",
+                });
+              }}
               id="platform"
-              checked
             />
-            <label className="form-check-label" for="platform">
+            <label className="form-check-label" htmlFor="platform">
               iOS
             </label>
           </div>
         </div>
 
         <div className="col-md-2">
-          <label for="colorInput" class="form-label">
+          <label htmlFor="colorInput" className="form-label">
             Color
           </label>
           <input
             type="color"
-            class="form-control form-control-color"
+            className="form-control form-control-color"
             id="colorInput"
-            value="#563d7c"
+            defaultValue={formData.color}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                color: e.target.value,
+              });
+            }}
             title="Choose your color"
           />
         </div>
 
         <div className="col-md-2">
-          <label for="mainCameraInput" className="form-label">
+          <label htmlFor="mainCameraInput" className="form-label">
             main camera - megapixel
           </label>
-          <input type="number" className="form-control" id="mainCameraInput" />
+          <input
+            type="number"
+            className="form-control"
+            id="mainCameraInput"
+            defaultValue={formData.mainCamera}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                mainCamera: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="col-md-2">
-          <label for="frontCameraInput" className="form-label">
+          <label htmlFor="frontCameraInput" className="form-label">
             front camera - megapixel
           </label>
-          <input type="number" className="form-control" id="frontCameraInput" />
+          <input
+            type="number"
+            className="form-control"
+            id="frontCameraInput"
+            defaultValue={formData.frontCamera}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                frontCamera: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="col-md-2">
-          <label for="batteryInput" className="form-label">
+          <label htmlFor="batteryInput" className="form-label">
             battery- mAh
           </label>
-          <input type="number" className="form-control" id="batteryInput" />
+          <input
+            type="number"
+            className="form-control"
+            id="batteryInput"
+            defaultValue={formData.battery}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                battery: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="col-md-2">
-          <label for="ramInput" className="form-label">
+          <label htmlFor="ramInput" className="form-label">
             ram
           </label>
-          <input type="number" className="form-control" id="ramInput" />
+          <input
+            type="number"
+            className="form-control"
+            id="ramInput"
+            defaultValue={formData.ram}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                ram: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="col-md-2">
-          <label for="displaySizeInput" className="form-label">
+          <label htmlFor="displaySizeInput" className="form-label">
             display Size
           </label>
-          <input type="number" className="form-control" id="displaySizeInput" />
+          <input
+            type="number"
+            className="form-control"
+            id="displaySizeInput"
+            defaultValue={formData.displaySize}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                displaySize: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="col-md-2">
-          <label for="displayResolutionInput" className="form-label">
+          <label htmlFor="displayResolutionInput" className="form-label">
             display resolution
           </label>
           <input
             type="text"
             className="form-control"
             id="displayResolutionInput"
+            defaultValue={formData.displayResolution}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                displayResolution: e.target.value,
+              });
+            }}
           />
         </div>
 
         <div className="col-md-2">
-          <label for="displayTypeInput" className="form-label">
+          <label htmlFor="displayTypeInput" className="form-label">
             display type
           </label>
-          <input type="text" className="form-control" id="displayTypeInput" />
+          <input
+            type="text"
+            className="form-control"
+            id="displayTypeInput"
+            defaultValue={formData.displayType}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                displayType: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="col-md-2">
-          <label for="heightInput" className="form-label">
+          <label htmlFor="heightInput" className="form-label">
             height
           </label>
-          <input type="number" className="form-control" id="heightInput" />
+          <input
+            type="number"
+            className="form-control"
+            id="heightInput"
+            defaultValue={formData.height}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                height: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="col-md-2">
-          <label for="widthInput" className="form-label">
+          <label htmlFor="widthInput" className="form-label">
             width
           </label>
-          <input type="number" className="form-control" id="widthInput" />
+          <input
+            type="number"
+            className="form-control"
+            id="widthInput"
+            defaultValue={formData.width}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                width: e.target.value,
+              });
+            }}
+          />
         </div>
         <div className="col-md-2">
-          <label for="depthInput" className="form-label">
+          <label htmlFor="depthInput" className="form-label">
             depth
           </label>
-          <input type="number" className="form-control" id="depthInput" />
+          <input
+            type="number"
+            className="form-control"
+            id="depthInput"
+            defaultValue={formData.depth}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                depth: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="col-md-2">
-          <label for="weightInput" className="form-label">
+          <label htmlFor="weightInput" className="form-label">
             weight
           </label>
-          <input type="number" className="form-control" id="weightInput" />
+          <input
+            type="number"
+            className="form-control"
+            id="weightInput"
+            defaultValue={formData.weight}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                weight: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="col-md-2">
-          <label for="priceCategoryRange" class="form-label">
+          <label htmlFor="priceCategoryRange" className="form-label">
             price Category
           </label>
           <input
             type="range"
-            class="form-range"
+            className="form-range"
             min="0"
             max="2"
             id="priceCategoryRange"
+            defaultValue={formData.priceCategory}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                ram: e.target.value,
+              });
+            }}
           />
         </div>
 
         <div className="col-md-12">
-          <label for="brand" className="form-label">
+          <label htmlFor="brand" className="form-label">
             brand
           </label>
           <select
             className="form-select"
             id="brand"
             aria-label="Default select example"
+            defaultValue={formData.brand}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                brand: e.target.value,
+              });
+            }}
           >
-            <option selected></option>
-            <option value="1">Apple</option>
-            <option value="2">Samsung</option>
-            <option value="3">Sony</option>
-            <option value="4">Xiaomi</option>
-            <option value="5">RealMe</option>
-            <option value="6">Huawei</option>
-            <option value="7">Honor</option>
-            <option value="8">OnePlus</option>
-            <option value="9">Nokia</option>
+            <option defaultValue></option>
+            {options.map((option) => (
+              <option key={option.value} defaultValue={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </div>
         <div className="col-md-12">
-          <label for="releaseDateInput" className="form-label">
+          <label htmlFor="releaseDateInput" className="form-label">
             release Date
           </label>
-          <input type="date" className="form-control" id="releaseDateInput" />
+          <input
+            type="date"
+            className="form-control"
+            id="releaseDateInput"
+            defaultValue={formData.releaseDate}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                releaseDate: e.target.value,
+              });
+            }}
+          />
         </div>
 
         <div className="mb-3 col-md-12">
-          <label for="descriptionInput" className="form-label">
+          <label htmlFor="descriptionInput" className="form-label">
             description
           </label>
           <textarea
+            required
             className="form-control"
             id="descriptionInput"
             rows="4"
+            defaultValue={formData.description}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                description: e.target.value,
+              });
+            }}
           ></textarea>
         </div>
 
         <div className="input-group mb-3  col-md-12">
-          <label for="inputGroupFile01" className="form-label  col-md-12">
+          <label htmlFor="inputGroupFile01" className="form-label  col-md-12">
             front Image
           </label>
           <input
             type="file"
+            onChange={firstFileChangeHandler}
             className="form-control"
             id="inputGroupFile01"
             accept="image/png, image/svg, image/jpeg"
           />
-          <label className="input-group-text" for="inputGroupFile01">
-            Upload
-          </label>
+
+          <div className="fileUploadControll col-md-12">
+            {firstFileError && (
+              <span className="badge bg-danger">{firstFileError}</span>
+            )}
+
+            {!firstFileUploadError && (
+              <span className="badge bg-sucess">{formData.frontImageURL}</span>
+            )}
+            {firstFileUploadError && (
+              <span className="badge bg-danger">{firstFileUploadError}</span>
+            )}
+          </div>
         </div>
 
         <div className="input-group mb-3 col-md-12">
-          <label for="inputGroupFile02" className="form-label col-md-12">
+          <label htmlFor="inputGroupFile02" className="form-label col-md-12">
             back Image
           </label>
           <input
             type="file"
             className="form-control"
             id="inputGroupFile02"
+            onChange={secondFileChangeHandler}
             accept="image/png, image/svg, image/jpeg"
           />
-          <label className="input-group-text" for="inputGroupFile02">
-            Upload
-          </label>
+
+          <div className="fileUploadControll col-md-12">
+            {secondFileError && (
+              <span className="badge bg-danger">{secondFileError}</span>
+            )}
+
+            {!secondFileUploadError && (
+              <span className="badge bg-sucess">{formData.backImageURL}</span>
+            )}
+            {secondFileUploadError && (
+              <span className="badge bg-danger">{secondFileUploadError}</span>
+            )}
+          </div>
         </div>
-        <button type="button" className="btn btn-primary">
-          check image upload status
-        </button>
-        <span className="badge bg-success">Success</span>
-        <span className="badge bg-danger">Danger</span>
+
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
