@@ -1,7 +1,6 @@
 import React from "react";
 
-function Smartphone(props) {
-  console.log(props);
+function Smartphone() {
   return (
     <div>
       <div class="card" style={{ width: " 18rem" }}>

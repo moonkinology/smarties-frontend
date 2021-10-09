@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Uploader from "./Uploader";
 
 import useFirestore from "../hooks/UseFirestore";
 import { storage, firestore, timestamp } from "../firebase/config";
 
 function AdminForm() {
+  const [frontImageUrl, setFirstFileUrl] = useState("");
+  const [backImageUrl, setSecondFileUrl] = useState("");
   const [formData, setFormData] = useState({
     platform: "Android",
     color: "#563d7c",
@@ -25,6 +28,19 @@ function AdminForm() {
     frontImageURL: "",
     backImageURL: "",
   });
+
+  const setFirstUrl = (url) => {
+    setFormData({
+      ...formData,
+      frontImageURL: url,
+    });
+  };
+  const setSecondUrl = (url) => {
+    setFormData({
+      ...formData,
+      backImageURL: url,
+    });
+  };
 
   const options = [
     {
@@ -66,25 +82,24 @@ function AdminForm() {
   ];
 
   const { docs } = useFirestore("images");
-
+  const [firstFileKey, setFirstFileKey] = useState("");
+  const [secondFileKey, setSecondFileKey] = useState("");
   const [firstFile, setFirstFile] = useState(null);
+
   const [secondFile, setSecondFile] = useState(null);
-  const [firstFileError, setFirstFileError] = useState(null);
+
   const [firstFileUploadError, setFirstFileUploadError] = useState(null);
-  const [secondFileError, setSecondFileError] = useState(null);
+
   const [secondFileUploadError, setsecondFileUploadError] = useState(null);
 
   const types = ["image/png", "image/jpeg"];
 
   const secondFileChangeHandler = (e) => {
     let selectedFile = e.target.files[0];
-
     if (selectedFile && types.includes(selectedFile.type)) {
       setSecondFile(selectedFile);
-      setFirstFileError(null);
     } else {
       setSecondFile(null);
-      setFirstFileError("Please select an image file (png or jpeg)");
     }
   };
 
@@ -92,61 +107,14 @@ function AdminForm() {
     let selectedFile = e.target.files[0];
 
     if (selectedFile && types.includes(selectedFile.type)) {
+      setFirstFileUrl("sda2131312");
       setFirstFile(selectedFile);
-      setSecondFileError(null);
     } else {
       setFirstFile(null);
-      setSecondFileError("Please select an image file (png or jpeg)");
     }
   };
 
-  useEffect(() => {
-    //references
-    const storageRef = secondFile && storage.ref(secondFile.name);
-
-    const collectionRef = firestore.collection("images");
-
-    secondFile &&
-      storageRef.put(secondFile).on(
-        "state_changed",
-        (error) => {
-          setsecondFileUploadError(error);
-        },
-        async () => {
-          const url = await storageRef.getDownloadURL();
-          const createdAt = timestamp();
-          collectionRef.add({ url: url, createdAt: createdAt });
-          setFormData({
-            ...formData,
-            backImageURL: url,
-          });
-        }
-      );
-  }, [secondFile, formData]);
-
-  useEffect(() => {
-    //references
-    const storageRef = firstFile && storage.ref(firstFile.name);
-
-    const collectionRef = firestore.collection("images");
-
-    firstFile &&
-      storageRef.put(firstFile).on(
-        "state_changed",
-        (error) => {
-          setFirstFileUploadError(error);
-        },
-        async () => {
-          const url = await storageRef.getDownloadURL();
-          const createdAt = timestamp();
-          collectionRef.add({ url: url, createdAt: createdAt });
-          setFormData({
-            ...formData,
-            frontImageURL: url,
-          });
-        }
-      );
-  }, [firstFile, formData]);
+  const collectionRef = firestore.collection("images");
 
   console.log(formData);
   return (
@@ -494,22 +462,19 @@ function AdminForm() {
           </label>
           <input
             type="file"
+            key={firstFileKey}
             onChange={firstFileChangeHandler}
             className="form-control"
             id="inputGroupFile01"
             accept="image/png, image/svg, image/jpeg"
           />
-
-          <div className="fileUploadControll col-md-12">
-            {firstFileError && (
-              <span className="badge bg-danger">{firstFileError}</span>
-            )}
-
-            {!firstFileUploadError && (
-              <span className="badge bg-sucess">{formData.frontImageURL}</span>
-            )}
-            {firstFileUploadError && (
-              <span className="badge bg-danger">{firstFileUploadError}</span>
+          <div className="col-md-12">
+            {firstFile && (
+              <Uploader
+                file={firstFile}
+                setFile={setFirstFileKey}
+                setUrl={setFirstUrl}
+              />
             )}
           </div>
         </div>
@@ -522,22 +487,19 @@ function AdminForm() {
             type="file"
             className="form-control"
             id="inputGroupFile02"
+            key={secondFileKey}
             onChange={secondFileChangeHandler}
             accept="image/png, image/svg, image/jpeg"
           />
-
-          <div className="fileUploadControll col-md-12">
-            {secondFileError && (
-              <span className="badge bg-danger">{secondFileError}</span>
-            )}
-
-            {!secondFileUploadError && (
-              <span className="badge bg-sucess">{formData.backImageURL}</span>
-            )}
-            {secondFileUploadError && (
-              <span className="badge bg-danger">{secondFileUploadError}</span>
-            )}
-          </div>
+        </div>
+        <div className="col-md-12">
+          {secondFile && (
+            <Uploader
+              file={secondFile}
+              setFile={setSecondFileKey}
+              setUrl={setSecondUrl}
+            />
+          )}
         </div>
 
         <button type="submit" className="btn btn-primary">
