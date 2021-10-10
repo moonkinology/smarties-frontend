@@ -1,6 +1,6 @@
 import React from "react";
 
-function Smartphone() {
+function SmartphoneCard() {
   return (
     <div>
       <div class="card" style={{ width: " 18rem" }}>
@@ -29,4 +29,4 @@ function Smartphone() {
   );
 }
 
-export default Smartphone;
+export default SmartphoneCard;

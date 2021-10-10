@@ -1,6 +1,6 @@
 import React from "react";
 
-function MoreDetails() {
+function MoreDetailsModal() {
   return (
     <div className=" d-flex p-4 justify-content-center">
       <button
@@ -68,4 +68,4 @@ function MoreDetails() {
   );
 }
 
-export default MoreDetails;
+export default MoreDetailsModal;
