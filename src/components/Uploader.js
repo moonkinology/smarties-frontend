@@ -29,4 +29,4 @@ function Uploader({ file, setFile, setUrl }) {
   }
 }
 
-export default Uploader;
+export default React.memo(Uploader);
