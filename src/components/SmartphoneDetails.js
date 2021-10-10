@@ -34,7 +34,7 @@ function SmartphoneDetails() {
             <div class="modal-footer">
               <button
                 class="btn btn-info"
-                data-bs-target="#exampleModalToggle2"
+                data-bs-target="#moreDetailsModalToggle"
                 data-bs-toggle="modal"
                 data-bs-dismiss="modal"
               >
@@ -46,15 +46,15 @@ function SmartphoneDetails() {
       </div>
       <div
         class="modal fade"
-        id="exampleModalToggle2"
+        id="moreDetailsModalToggle"
         aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel2"
+        aria-labelledby="moreDetailsModalToggle"
         tabindex="-1"
       >
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalToggleLabel2">
+              <h5 class="modal-title" id="moreDetailsModalToggle">
                 Modal 2
               </h5>
               <button
