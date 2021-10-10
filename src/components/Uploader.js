@@ -11,7 +11,7 @@ function Uploader({ file, setFile, setUrl }) {
     }
   }, [url, setFile]);
   console.log(url);
-  if (progress != 100) {
+  if (progress !== 100) {
     return (
       <span className="badge bg-primary">
         Uploading {parseFloat(progresPercentage).toFixed(2)}%

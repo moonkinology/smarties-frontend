@@ -4,8 +4,8 @@ import DetailsMain from "./DetailsMain";
 function SmartphoneDetails() {
   return (
     <div>
-      <DetailsTabs />
       <DetailsMain />
+      <DetailsTabs />
     </div>
   );
 }
