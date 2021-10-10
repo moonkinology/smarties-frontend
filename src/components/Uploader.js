@@ -20,7 +20,9 @@ function Uploader({ file, setFile, setUrl }) {
   } else {
     return (
       <div>
-        <span className="badge bg-success">Uploaded successfully</span>
+        <span className="badge bg-success">
+          {file.name} Uploaded successfully
+        </span>
         <span style={{ display: "none" }} className="badge bg-info">
           url: {url}
         </span>
