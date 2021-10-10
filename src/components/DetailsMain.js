@@ -1,5 +1,5 @@
 import React from "react";
-import MoreDetailsModal from "./MoreDetailsModal";
+
 
 function DetailsMain() {
   return (
@@ -48,7 +48,7 @@ function DetailsMain() {
           </table>
         </div>
       </div>
-      <MoreDetailsModal />
+     
     </div>
   );
 }

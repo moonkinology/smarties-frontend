@@ -1,5 +1,5 @@
 import React from "react";
-
+import SmartphoneDetails from "./SmartphoneDetails";
 function SmartphoneCard() {
   return (
     <div>
@@ -15,14 +15,7 @@ function SmartphoneCard() {
             Some quick example text to build on the card title and make up the
             bulk of the card's content.
           </p>
-          <button
-            type="button"
-            class="btn btn-success"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            read more
-          </button>
+          <SmartphoneDetails />
         </div>
       </div>
     </div>
