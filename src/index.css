@@ -2,3 +2,8 @@
 .carousel-control-prev-icon {
   filter: invert(1);
 }
+
+.bi {
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
