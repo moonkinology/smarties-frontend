@@ -1,6 +1,5 @@
 import React from "react";
 
-
 function DetailsMain() {
   return (
     <div className="container">
@@ -48,7 +47,6 @@ function DetailsMain() {
           </table>
         </div>
       </div>
-     
     </div>
   );
 }
