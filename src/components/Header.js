@@ -3,47 +3,57 @@ import React from "react";
 function Header() {
   return (
     <div>
-      <div className="container">
-        <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-          <a
-            href="/"
-            className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/872/872601.png"
-              className="bi me-2"
-              width="40"
-              height="32"
-              role="img"
-              aria-label="Bootstrap"
-            />
-            <use xlinkHref="#bootstrap" />
-          </a>
+      <header class="p-3  ">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a
+              href="/"
+              class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/872/872601.png"
+                className="bi me-2"
+                width="40"
+                height="32"
+                role="img"
+                aria-label="Bootstrap"
+              />
+            </a>
 
-          <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li>
-              <a href="#bootstrap" className="nav-link px-2 link-secondary">
-                Home
-              </a>
-            </li>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li>
+                <a href="#" class="nav-link px-2 text-secondary">
+                  Home
+                </a>
+              </li>
 
-            <li>
-              <a href="#" className="nav-link px-2 link-dark">
-                About
-              </a>
-            </li>
-          </ul>
+              <li>
+                <a href="#" class="nav-link px-2 text-dark">
+                  About
+                </a>
+              </li>
+            </ul>
 
-          <div className="col-md-3 text-end">
-            <button type="button" className="btn btn-outline-primary me-2">
-              Login
-            </button>
-            <button type="button" className="btn btn-primary">
-              Sign-up
-            </button>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+              <input
+                type="search"
+                class="form-control form-control-dark"
+                placeholder="Search..."
+                aria-label="Search"
+              />
+            </form>
+
+            <div class="text-end">
+              <button type="button" class="btn btn-outline-dark me-2">
+                Login
+              </button>
+              <button type="button" class="btn btn-warning">
+                Sign-up
+              </button>
+            </div>
           </div>
-        </header>
-      </div>
+        </div>
+      </header>
     </div>
   );
 }
