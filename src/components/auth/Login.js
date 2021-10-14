@@ -14,17 +14,25 @@ function Login() {
         <h1 className="h3 mb-3 fw-normal mb-5">Log in</h1>
 
         <div className="form-floating">
-          <input type="email" className="form-control" id="floatingInput" />
-          <label for="floatingInput">Email address</label>
+          <input
+            type="email"
+            className="form-control"
+            id="loginEmail"
+            placeholder=""
+            required
+          />
+          <label for="loginEmail">Email address</label>
         </div>
 
         <div className="form-floating">
           <input
             type="password"
             className="form-control"
-            id="floatingPassword"
+            id="loginPassword"
+            placeholder=""
+            required
           />
-          <label for="floatingPassword">Password</label>
+          <label for="loginPassword">Password</label>
         </div>
 
         <button className="w-100 btn btn-lg btn-primary" type="submit">

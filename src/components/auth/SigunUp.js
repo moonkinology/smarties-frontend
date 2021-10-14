@@ -14,28 +14,36 @@ function SignUp() {
         <h1 className="h3 mb-3 fw-normal mb-5">Sign up</h1>
 
         <div className="form-floating">
-          <input type="email" className="form-control" id="floatingInput" />
-          <label for="floatingInput">Email address</label>
+          <input
+            type="email"
+            className="form-control"
+            id="signUpEmail"
+            placeholder=""
+            required
+          />
+          <label for="signUpEmail">Email Address</label>
         </div>
 
         <div className="form-floating">
           <input
             type="password"
             className="form-control"
-            id="floatingPassword"
+            id="signUpPassword"
+            placeholder=""
+            required
           />
-          <label for="floatingPassword">Password</label>
+          <label for="signUpPassword">Password</label>
         </div>
 
         <div className="form-floating">
           <input
             type="password"
             className="form-control"
-            id="floatingPasswordConfirmation"
+            id="passwordConfirmation"
+            placeholder=""
+            required
           />
-          <label for="floatingPasswordConfirmation">
-            Password confirmation
-          </label>
+          <label for="passwordConfirmation">Password Confirmation</label>
         </div>
 
         <button className="w-100 btn btn-lg btn-primary" type="submit">
