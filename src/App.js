@@ -4,16 +4,19 @@ import AdminForm from "./components/AdminForm";
 import SignUp from "./components/auth/SigunUp";
 import Login from "./components/auth/Login";
 import Header from "./components/Header";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <div className="App">
-      <div className="container">
-        <Header />
-        <SignUp />
-        <SmartphoneCard />
+    <AuthProvider>
+      <div className="App">
+        <div className="container">
+          <Header />
+          <SignUp />
+          <SmartphoneCard />
+        </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 }
 

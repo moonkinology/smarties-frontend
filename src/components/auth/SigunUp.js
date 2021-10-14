@@ -1,12 +1,38 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 function SignUp() {
   const emailRef = useRef();
   const pwRef = useRef();
   const pwConfirmationRef = useRef();
+  const { signUp, currentUser } = useAuth();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState();
+  const [success, setSuccess] = useState();
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (pwRef.current.value !== pwConfirmationRef.current.value) {
+      return setError("Passwords do not match");
+    }
+
+    //sign up is async ==> try catch
+    try {
+      setError("");
+      setLoading(true);
+      await signUp(emailRef.current.value, pwRef.current.value);
+      setLoading(false);
+      setSuccess("Account successfully created for " + currentUser.email);
+      setTimeout(function () {
+        setSuccess("");
+      }, 4000);
+    } catch (e) {
+      setError("Failed to create an account.\n" + e.message);
+      setLoading(false);
+    }
+  }
   return (
     <div className="text-center form-signin my-5">
-      <form>
+      <form onSubmit={handleSubmit}>
         <img
           className="mb-4"
           src="https://www.svgrepo.com/show/161419/wink.svg"
@@ -15,7 +41,16 @@ function SignUp() {
           height="55"
         />
         <h1 className="h3 mb-3 fw-normal mb-5">Sign up</h1>
-
+        {error && (
+          <div class="alert alert-danger" role="alert">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div class="alert alert-success" role="alert">
+            {success}
+          </div>
+        )}
         <div className="form-floating">
           <input
             type="email"
@@ -52,7 +87,11 @@ function SignUp() {
           <label for="passwordConfirmation">Password Confirmation</label>
         </div>
 
-        <button className="w-100 btn btn-lg btn-primary" type="submit">
+        <button
+          className="w-100 btn btn-lg btn-primary"
+          type="submit"
+          disabled={loading}
+        >
           Sign in
         </button>
         <p className="mt-5 mb-3 text-muted">&copy; Smarties</p>
