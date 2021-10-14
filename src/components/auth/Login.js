@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 
 function Login() {
+  const emailRef = useRef();
+  const pwRef = useRef();
+
   return (
     <div className="text-center form-signin my-5">
       <form>
@@ -18,8 +21,9 @@ function Login() {
             type="email"
             className="form-control"
             id="loginEmail"
-            placeholder=""
+            placeholder="Email address"
             required
+            ref={emailRef}
           />
           <label for="loginEmail">Email address</label>
         </div>
@@ -29,8 +33,9 @@ function Login() {
             type="password"
             className="form-control"
             id="loginPassword"
-            placeholder=""
+            placeholder="Password"
             required
+            ref={pwRef}
           />
           <label for="loginPassword">Password</label>
         </div>

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 
 function SignUp() {
+  const emailRef = useRef();
+  const pwRef = useRef();
+  const pwConfirmationRef = useRef();
   return (
     <div className="text-center form-signin my-5">
       <form>
@@ -18,8 +21,9 @@ function SignUp() {
             type="email"
             className="form-control"
             id="signUpEmail"
-            placeholder=""
+            placeholder="Email"
             required
+            ref={emailRef}
           />
           <label for="signUpEmail">Email Address</label>
         </div>
@@ -29,7 +33,8 @@ function SignUp() {
             type="password"
             className="form-control"
             id="signUpPassword"
-            placeholder=""
+            ref={pwRef}
+            placeholder="password"
             required
           />
           <label for="signUpPassword">Password</label>
@@ -40,7 +45,8 @@ function SignUp() {
             type="password"
             className="form-control"
             id="passwordConfirmation"
-            placeholder=""
+            placeholder="Password Confirmation"
+            ref={pwConfirmationRef}
             required
           />
           <label for="passwordConfirmation">Password Confirmation</label>
