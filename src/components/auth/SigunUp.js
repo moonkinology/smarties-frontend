@@ -62,7 +62,7 @@ function SignUp() {
             required
             ref={emailRef}
           />
-          <label for="signUpEmail">Email Address</label>
+          <label htmlFor="signUpEmail">Email Address</label>
         </div>
 
         <div className="form-floating">
@@ -74,7 +74,7 @@ function SignUp() {
             placeholder="password"
             required
           />
-          <label for="signUpPassword">Password</label>
+          <label htmlFor="signUpPassword">Password</label>
         </div>
 
         <div className="form-floating">
@@ -86,7 +86,7 @@ function SignUp() {
             ref={pwConfirmationRef}
             required
           />
-          <label for="passwordConfirmation">Password Confirmation</label>
+          <label htmlFor="passwordConfirmation">Password Confirmation</label>
         </div>
 
         <button
@@ -94,7 +94,7 @@ function SignUp() {
           type="submit"
           disabled={loading}
         >
-          Sign in
+          Sign up
         </button>
         <p className="mt-5 mb-3 text-muted">&copy; Smarties</p>
       </form>
