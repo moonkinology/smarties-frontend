@@ -20,7 +20,7 @@ function SignUp() {
       setError("");
       setLoading(true);
       await signUp(emailRef.current.value, pwRef.current.value);
-      //when we have a user, by default is true  
+      //when we have a user, by default is true
       setLoading(false);
       setSuccess("Account successfully created for " + currentUser.email);
       setTimeout(function () {
@@ -43,12 +43,12 @@ function SignUp() {
         />
         <h1 className="h3 mb-3 fw-normal mb-5">Sign up</h1>
         {error && (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             {error}
           </div>
         )}
         {success && (
-          <div class="alert alert-success" role="alert">
+          <div className="alert alert-success" role="alert">
             {success}
           </div>
         )}

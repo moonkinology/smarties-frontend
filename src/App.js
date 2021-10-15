@@ -3,7 +3,6 @@ import AdminForm from "./components/AdminForm";
 import SignUp from "./components/auth/SigunUp";
 import Login from "./components/auth/Login";
 import Main from "./components/Main";
-
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 

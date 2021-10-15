@@ -7,33 +7,33 @@ function SmartphoneDetails() {
       {/* A JSX comment */}
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="detailsModalToggle"
         aria-hidden="true"
         aria-labelledby="detailsModalToggleLabel"
         tabindex="-1"
       >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="detailsModalToggleLabel">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="detailsModalToggleLabel">
                 Modal 1
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <div>
                 <DetailsMain />
               </div>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
-                class="btn btn-info"
+                className="btn btn-info"
                 data-bs-target="#reviewsModalToggle"
                 data-bs-toggle="modal"
                 data-bs-dismiss="modal"
@@ -41,7 +41,7 @@ function SmartphoneDetails() {
                 reviews
               </button>
               <button
-                class="btn btn-dark"
+                className="btn btn-dark"
                 data-bs-target="#moreDetailsModalToggle"
                 data-bs-toggle="modal"
                 data-bs-dismiss="modal"
@@ -55,28 +55,28 @@ function SmartphoneDetails() {
       {/* moreDetails */}
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="moreDetailsModalToggle"
         aria-hidden="true"
         aria-labelledby="moreDetailsModalToggle"
         tabindex="-1"
       >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="moreDetailsModalToggle">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="moreDetailsModalToggle">
                 Modal 2
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
 
-            <div class="modal-body">
-              <table class="table table-striped">
+            <div className="modal-body">
+              <table className="table table-striped">
                 <tbody>
                   <tr>
                     <th>1</th>
@@ -94,9 +94,9 @@ function SmartphoneDetails() {
               </table>
             </div>
 
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 data-bs-target="#detailsModalToggle"
                 data-bs-toggle="modal"
                 data-bs-dismiss="modal"
@@ -110,33 +110,33 @@ function SmartphoneDetails() {
       {/* reviews */}
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="reviewsModalToggle"
         aria-hidden="true"
         aria-labelledby="reviewsModalToggle"
         tabindex="-1"
       >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="reviewsModalToggle">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="reviewsModalToggle">
                 Modal 3
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
 
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Here comes a comment section</p>
             </div>
 
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 data-bs-target="#detailsModalToggle"
                 data-bs-toggle="modal"
                 data-bs-dismiss="modal"
@@ -148,7 +148,7 @@ function SmartphoneDetails() {
         </div>
       </div>
       <a
-        class="btn btn-success"
+        className="btn btn-success"
         data-bs-toggle="modal"
         href="#detailsModalToggle"
         role="button"
