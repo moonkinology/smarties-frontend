@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function SignUp() {
   const emailRef = useRef();
@@ -97,6 +98,9 @@ function SignUp() {
         </button>
         <p className="mt-5 mb-3 text-muted">&copy; Smarties</p>
       </form>
+      <div className="w-100 text-center mt-2">
+        Already have an account? <Link to="/login">Log In</Link>
+      </div>
     </div>
   );
 }
