@@ -1,13 +1,38 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function Login() {
-  const emailRef = useRef();
-  const pwRef = useRef();
+  const loginEmailRef = useRef();
+  const loginPwRef = useRef();
+
+  const { login, currentUser } = useAuth();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState();
+  const [success, setSuccess] = useState();
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    //sign up is async ==> try catch
+    try {
+      setError("");
+      setLoading(true);
+      await login(loginEmailRef.current.value, loginPwRef.current.value);
+      //when we have a user, by default is true
+      setLoading(false);
+      setSuccess("You're now logged in as " + currentUser.email);
+      setTimeout(function () {
+        setSuccess("");
+      }, 4000);
+    } catch (e) {
+      setError("Failed to sign in.\n" + e.message);
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="text-center form-signin my-5">
-      <form>
+      <form onSubmit={handleSubmit}>
         <img
           className="mb-4"
           src="https://www.svgrepo.com/show/161419/wink.svg"
@@ -16,7 +41,16 @@ function Login() {
           height="55"
         />
         <h1 className="h3 mb-3 fw-normal mb-5">Log in</h1>
-
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="alert alert-success" role="alert">
+            {success}
+          </div>
+        )}
         <div className="form-floating">
           <input
             type="email"
@@ -24,9 +58,9 @@ function Login() {
             id="loginEmail"
             placeholder="Email address"
             required
-            ref={emailRef}
+            ref={loginEmailRef}
           />
-          <label for="loginEmail">Email address</label>
+          <label htmlFor="loginEmail">Email address</label>
         </div>
 
         <div className="form-floating">
@@ -36,12 +70,16 @@ function Login() {
             id="loginPassword"
             placeholder="Password"
             required
-            ref={pwRef}
+            ref={loginPwRef}
           />
-          <label for="loginPassword">Password</label>
+          <label htmlFor="loginPassword">Password</label>
         </div>
 
-        <button className="w-100 btn btn-lg btn-primary" type="submit">
+        <button
+          className="w-100 btn btn-lg btn-primary"
+          disabled={loading}
+          type="submit"
+        >
           Log in
         </button>
         <p className="mt-5 mb-3 text-muted">&copy; Smarties</p>
