@@ -5,6 +5,7 @@ import SignUp from "./components/auth/SigunUp";
 import Login from "./components/auth/Login";
 import Header from "./components/Header";
 import { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
