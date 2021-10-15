@@ -20,6 +20,7 @@ function SignUp() {
       setError("");
       setLoading(true);
       await signUp(emailRef.current.value, pwRef.current.value);
+      //when we have a user, by default is true  
       setLoading(false);
       setSuccess("Account successfully created for " + currentUser.email);
       setTimeout(function () {
