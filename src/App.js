@@ -9,15 +9,17 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <AuthProvider>
-      <div className="App">
-        <div className="container">
-          <Header />
-          <SignUp />
-          <SmartphoneCard />
-        </div>
+    <div className="App">
+      <div className="container">
+        <Router>
+          <AuthProvider>
+            <Switch>
+              <Route path="/signup" component={SignUp} />
+            </Switch>
+          </AuthProvider>
+        </Router>
       </div>
-    </AuthProvider>
+    </div>
   );
 }
 
