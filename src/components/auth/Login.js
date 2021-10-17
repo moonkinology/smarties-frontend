@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 function Login() {
@@ -10,6 +10,7 @@ function Login() {
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const [success, setSuccess] = useState();
+  const history = useHistory();
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -23,7 +24,8 @@ function Login() {
       setSuccess("You're now logged in as " + currentUser.email);
       setTimeout(function () {
         setSuccess("");
-      }, 4000);
+        history.push("/");
+      }, 1000);
     } catch (e) {
       setError("Failed to sign in.\n" + e.message);
       setLoading(false);

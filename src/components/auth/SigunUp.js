@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function SignUp() {
   const emailRef = useRef();
@@ -10,6 +10,7 @@ function SignUp() {
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const [success, setSuccess] = useState();
+  const history = useHistory();
   async function handleSubmit(e) {
     e.preventDefault();
     if (pwRef.current.value !== pwConfirmationRef.current.value) {
@@ -26,7 +27,8 @@ function SignUp() {
       setSuccess("Account successfully created for " + currentUser.email);
       setTimeout(function () {
         setSuccess("");
-      }, 4000);
+        history.push("/");
+      }, 1000);
     } catch (e) {
       setError("Failed to create an account.\n" + e.message);
       setLoading(false);
