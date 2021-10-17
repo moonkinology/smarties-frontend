@@ -9,8 +9,12 @@ function Header() {
   const [success, setSuccess] = useState();
 
   const history = useHistory();
-  function handleSignUp() {}
-  function handleLogin() {}
+  function handleSignUp() {
+    history.push("/signup");
+  }
+  function handleLogin() {
+    history.push("/login");
+  }
   async function handleLogOut() {
     //sign up is async ==> try catch
     try {
