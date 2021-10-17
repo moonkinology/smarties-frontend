@@ -58,7 +58,7 @@ function Header() {
                 </a>
               </li>
               <li>
-                <a href="/smartphones" className="nav-link px-2 text-dark">
+                <a href="/about" className="nav-link px-2 text-dark">
                   About
                 </a>
               </li>
