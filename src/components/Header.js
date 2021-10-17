@@ -15,6 +15,7 @@ function Header() {
   function handleLogin() {
     history.push("/login");
   }
+
   async function handleLogOut() {
     //sign up is async ==> try catch
     try {
@@ -52,13 +53,12 @@ function Header() {
             </a>
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li>
-                <a href="#" className="nav-link px-2 text-secondary">
-                  Home
+                <a href="/" className="nav-link px-2 text-dark">
+                  Smartphones
                 </a>
               </li>
-
               <li>
-                <a href="#" className="nav-link px-2 text-dark">
+                <a href="/smartphones" className="nav-link px-2 text-dark">
                   About
                 </a>
               </li>
