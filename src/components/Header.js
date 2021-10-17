@@ -111,15 +111,6 @@ function Header() {
                 {success}
               </div>
             )}
-
-            {currentUser && (
-              <div className="col-12">
-                <strong>Email: </strong> {currentUser.email}
-                <Link to="/update-profile" className="btn btn-primary w-100">
-                  Update Profile
-                </Link>
-              </div>
-            )}
           </div>
         </div>
       </header>
