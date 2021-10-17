@@ -1,6 +1,33 @@
-import React from "react";
+import React, { use, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { Link, useHistory } from "react-router-dom";
 
 function Header() {
+  const [error, setError] = useState("");
+  const { signUp, currentUser, logout } = useAuth();
+  const [loading, setLoading] = useState();
+  const [success, setSuccess] = useState();
+
+  const history = useHistory();
+  function handleSignUp() {}
+  function handleLogin() {}
+  async function handleLogOut() {
+    //sign up is async ==> try catch
+    try {
+      setError("");
+      setLoading(true);
+      await logout();
+      setLoading(false);
+      setSuccess("You're now logged out");
+      setTimeout(function () {
+        setSuccess("");
+        history.push("/");
+      }, 1000);
+    } catch (e) {
+      setError("Failed to log out.\n" + e.message);
+      setLoading(false);
+    }
+  }
   return (
     <div>
       <header className="p-3  ">
@@ -19,7 +46,6 @@ function Header() {
                 aria-label="Bootstrap"
               />
             </a>
-
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li>
                 <a href="#" className="nav-link px-2 text-secondary">
@@ -33,7 +59,6 @@ function Header() {
                 </a>
               </li>
             </ul>
-
             <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
               <input
                 type="search"
@@ -42,15 +67,59 @@ function Header() {
                 aria-label="Search"
               />
             </form>
-
             <div className="text-end">
-              <button type="button" className="btn btn-outline-dark me-2">
-                Login
-              </button>
-              <button type="button" className="btn btn-warning">
-                Sign-up
-              </button>
+              {!currentUser && (
+                <button
+                  type="button"
+                  disabled={loading}
+                  className="btn btn-outline-dark me-2"
+                  onClick={handleLogin}
+                >
+                  Login
+                </button>
+              )}
+              {currentUser && (
+                <button
+                  type="button"
+                  disabled={loading}
+                  className="btn btn-outline-dark me-2"
+                  onClick={handleLogOut}
+                >
+                  log out
+                </button>
+              )}
+
+              {!currentUser && (
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  disabled={loading}
+                  onClick={handleSignUp}
+                >
+                  Sign-up
+                </button>
+              )}
             </div>
+
+            {error && (
+              <div className="alert alert-danger col-12 mt-4" role="alert">
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="alert alert-success" role="alert">
+                {success}
+              </div>
+            )}
+
+            {currentUser && (
+              <div className="col-12">
+                <strong>Email: </strong> {currentUser.email}
+                <Link to="/update-profile" className="btn btn-primary w-100">
+                  Update Profile
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </header>
