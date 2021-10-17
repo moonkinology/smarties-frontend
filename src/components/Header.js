@@ -96,7 +96,7 @@ function Header() {
               {!currentUser && (
                 <button
                   type="button"
-                  className="btn btn-warning"
+                  className="btn btn-outline-dark"
                   disabled={loading}
                   onClick={handleSignUp}
                 >
