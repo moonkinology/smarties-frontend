@@ -1,6 +1,6 @@
 import React, { use, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, NavLink } from "react-router-dom";
 
 function Header() {
   const [error, setError] = useState("");
@@ -38,8 +38,8 @@ function Header() {
       <header className="p-3  ">
         <div className="container">
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a
-              href="/"
+            <NavLink
+              to="/"
               className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
             >
               <img
@@ -50,17 +50,17 @@ function Header() {
                 role="img"
                 aria-label="Bootstrap"
               />
-            </a>
+            </NavLink>
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li>
-                <a href="/" className="nav-link px-2 text-dark">
+                <NavLink to="/" exact className="nav-link px-2 text-dark">
                   Smartphones
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="/about" className="nav-link px-2 text-dark">
+                <NavLink to="/about" className="nav-link px-2 text-dark">
                   About
-                </a>
+                </NavLink>
               </li>
             </ul>
             <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
