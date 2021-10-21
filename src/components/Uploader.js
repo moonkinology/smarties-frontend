@@ -3,7 +3,7 @@ import useStorage from "../hooks/UseStorage";
 function Uploader({ file, setFile, setUrl }) {
   const { url, progress } = useStorage(file);
   let progresPercentage = `${progress} %`;
-  console.log(progresPercentage);
+  // console.log(progresPercentage);
   useEffect(() => {
     if (url) {
       setFile(null);

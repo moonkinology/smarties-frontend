@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Uploader from "./Uploader";
-
+import axios from "axios";
 import useFirestore from "../hooks/UseFirestore";
 import { storage, firestore, timestamp } from "../firebase/config";
 
@@ -14,6 +14,7 @@ function AdminForm() {
     frontCamera: "",
     battery: "",
     ram: "",
+    memory: "",
     displaySize: "",
     displayResolution: "",
     displayType: "",
@@ -106,7 +107,61 @@ function AdminForm() {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(formData);
+    const image = {
+      firstUrl: formData.frontImageURL,
+      secondUrl: formData.backImageURL,
+    };
+
+    axios({
+      method: "post",
+      url: "http://localhost:8080/img",
+      data: image,
+    }).then(
+      (response) => {
+        console.log("image:" + response.data);
+        postSmartphone(response.data);
+      },
+      (error) => {
+        console.log("image:" + error);
+      }
+    );
   };
+
+  function postSmartphone(imageId) {
+    const smartphone = {
+      platform: formData.platform,
+      mainCamera: formData.mainCamera,
+      selfieCamera: formData.frontCamera,
+      battery: formData.battery,
+      memory: formData.memory,
+      ram: formData.ram,
+      color: formData.color,
+      releaseDate: formData.releaseDate,
+      description: formData.description,
+      displaySize: formData.displaySize,
+      displayResolution: formData.displayResolution,
+      displayType: formData.displayType,
+      manufacturer: formData.brand,
+      height: formData.height,
+      width: formData.width,
+      depth: formData.depth,
+      weight: formData.weight,
+      priceCategory: formData.priceCategory,
+      images: imageId,
+    };
+    axios({
+      method: "post",
+      url: "http://localhost:8080/sp",
+      data: smartphone,
+    }).then(
+      (response) => {
+        console.log("smartphone:" + response.data);
+      },
+      (error) => {
+        console.log("smartphone:" + error);
+      }
+    );
+  }
   const firstFileChangeHandler = (e) => {
     let selectedFile = e.target.files[0];
 
@@ -122,7 +177,7 @@ function AdminForm() {
 
   return (
     <div>
-      <form className="row g-3">
+      <form className="row g-3" onSubmit={(e) => submitHandler(e)}>
         <div className="col-md-2">
           <div className="form-check">
             <input
@@ -252,6 +307,25 @@ function AdminForm() {
               setFormData({
                 ...formData,
                 ram: e.target.value,
+              });
+            }}
+          />
+        </div>
+
+        <div className="col-md-2">
+          <label htmlFor="memoryInput" className="form-label">
+            meomry
+          </label>
+          <input
+            required
+            type="number"
+            className="form-control"
+            id="memoryInput"
+            defaultValue={formData.memory}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                memory: e.target.value,
               });
             }}
           />
@@ -523,7 +597,6 @@ function AdminForm() {
           disabled={
             formData.frontImageURL === "" || formData.backImageURL === ""
           }
-          onSubmit={submitHandler}
         >
           Submit
         </button>
