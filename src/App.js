@@ -17,6 +17,7 @@ function App() {
             <Header />
             <Switch>
               <Route exact path="/" component={Main} />
+              <Route path="/admin" component={AdminForm} />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={Login} />
               <Route path="/about" component={About} />
