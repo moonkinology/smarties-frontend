@@ -1,12 +1,12 @@
 import SmartphoneCard from "./components/SmartphoneCard";
-import AdminForm from "./components/AdminForm";
+import AdminForm from "./components/Adminstration/AdminForm";
 import SignUp from "./components/auth/SigunUp";
 import Login from "./components/auth/Login";
 import Main from "./components/Main";
-import About from "./components/About";
+import About from "./components/UI/About";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Header from "./components/Header";
+import Header from "./components/UI/Header";
 
 function App() {
   return (

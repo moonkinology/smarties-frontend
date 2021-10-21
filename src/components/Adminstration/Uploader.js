@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import useStorage from "../hooks/UseStorage";
+import useStorage from "../../hooks/UseStorage";
 function Uploader({ file, setFile, setUrl }) {
   const { url, progress } = useStorage(file);
   let progresPercentage = `${progress} %`;

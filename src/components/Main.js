@@ -1,6 +1,6 @@
 import React from "react";
 
-import Carousel from "./Carousel";
+import Carousel from "./UI/Carousel";
 function Main() {
   return (
     <div>

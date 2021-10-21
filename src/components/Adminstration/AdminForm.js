@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import Uploader from "./Uploader";
 import axios from "axios";
-import useFirestore from "../hooks/UseFirestore";
-import { storage, firestore, timestamp } from "../firebase/config";
+import useFirestore from "../../hooks/UseFirestore";
+import { storage, firestore, timestamp } from "../../firebase/config";
 
 function AdminForm() {
   const [frontImageUrl, setFirstFileUrl] = useState("");

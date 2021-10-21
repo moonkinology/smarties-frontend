@@ -11,3 +11,14 @@
 .nav .nav-link.active {
   font-weight: bold;
 }
+
+.frame {
+  height: 400px;
+  width: 330px;
+}
+
+.frame img {
+  height: 300px;
+  width: 200px;
+  object-fit: contain;
+}

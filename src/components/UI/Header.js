@@ -1,5 +1,5 @@
 import React, { use, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { Link, useHistory, NavLink } from "react-router-dom";
 
 function Header() {
