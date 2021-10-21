@@ -103,6 +103,10 @@ function AdminForm() {
     }
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
   const firstFileChangeHandler = (e) => {
     let selectedFile = e.target.files[0];
 
@@ -116,7 +120,6 @@ function AdminForm() {
 
   const collectionRef = firestore.collection("images");
 
-  console.log(formData);
   return (
     <div>
       <form className="row g-3">
@@ -184,6 +187,7 @@ function AdminForm() {
           </label>
           <input
             type="number"
+            required
             className="form-control"
             id="mainCameraInput"
             defaultValue={formData.mainCamera}
@@ -201,6 +205,7 @@ function AdminForm() {
             front camera - megapixel
           </label>
           <input
+            required
             type="number"
             className="form-control"
             id="frontCameraInput"
@@ -219,6 +224,7 @@ function AdminForm() {
             battery- mAh
           </label>
           <input
+            required
             type="number"
             className="form-control"
             id="batteryInput"
@@ -237,6 +243,7 @@ function AdminForm() {
             ram
           </label>
           <input
+            required
             type="number"
             className="form-control"
             id="ramInput"
@@ -255,6 +262,7 @@ function AdminForm() {
             display Size
           </label>
           <input
+            required
             type="number"
             className="form-control"
             id="displaySizeInput"
@@ -273,6 +281,7 @@ function AdminForm() {
             display resolution
           </label>
           <input
+            required
             type="text"
             className="form-control"
             id="displayResolutionInput"
@@ -309,6 +318,7 @@ function AdminForm() {
             height
           </label>
           <input
+            required
             type="number"
             className="form-control"
             id="heightInput"
@@ -327,6 +337,7 @@ function AdminForm() {
             width
           </label>
           <input
+            required
             type="number"
             className="form-control"
             id="widthInput"
@@ -344,6 +355,7 @@ function AdminForm() {
             depth
           </label>
           <input
+            required
             type="number"
             className="form-control"
             id="depthInput"
@@ -362,6 +374,7 @@ function AdminForm() {
             weight
           </label>
           <input
+            required
             type="number"
             className="form-control"
             id="weightInput"
@@ -400,6 +413,7 @@ function AdminForm() {
             brand
           </label>
           <select
+            required
             className="form-select"
             id="brand"
             aria-label="Default select example"
@@ -424,6 +438,7 @@ function AdminForm() {
             release Date
           </label>
           <input
+            required
             type="date"
             className="form-control"
             id="releaseDateInput"
@@ -502,7 +517,14 @@ function AdminForm() {
           )}
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={
+            formData.frontImageURL === "" || formData.backImageURL === ""
+          }
+          onSubmit={submitHandler}
+        >
           Submit
         </button>
       </form>
