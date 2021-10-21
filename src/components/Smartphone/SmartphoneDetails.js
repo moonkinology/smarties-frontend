@@ -1,6 +1,6 @@
 import React from "react";
-import DetailsMain from "./Smartphone/DetailsMain";
-import MoreDetailsModal from "./Smartphone/MoreDetailsModal";
+import DetailsMain from "./DetailsMain";
+import MoreDetailsModal from "./MoreDetailsModal";
 function SmartphoneDetails() {
   return (
     <div>
