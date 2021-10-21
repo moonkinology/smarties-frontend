@@ -9,7 +9,7 @@ function Uploader({ file, setFile, setUrl }) {
       setFile(null);
       setUrl(url);
     }
-  }, [url, setFile, setUrl]);
+  }, [url, setFile]);
   console.log(url);
   if (progress !== 100) {
     return (
