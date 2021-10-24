@@ -9,6 +9,7 @@ function AdminForm() {
   const [backImageUrl, setSecondFileUrl] = useState("");
   const [formData, setFormData] = useState({
     platform: "Android",
+    model: "",
     color: "#563d7c",
     mainCamera: "",
     frontCamera: "",
@@ -130,6 +131,7 @@ function AdminForm() {
   function postSmartphone(imageId) {
     const smartphone = {
       platform: formData.platform,
+      model: formData.model,
       mainCamera: formData.mainCamera,
       selfieCamera: formData.frontCamera,
       battery: formData.battery,
@@ -507,6 +509,26 @@ function AdminForm() {
             ))}
           </select>
         </div>
+
+        <div className="col-md-3">
+          <label htmlFor="modelInput" className="form-label">
+            model
+          </label>
+          <input
+            required
+            rows="2"
+            className="form-control"
+            id="modelInput"
+            defaultValue={formData.model}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                model: e.target.value,
+              });
+            }}
+          />
+        </div>
+
         <div className="col-md-12">
           <label htmlFor="releaseDateInput" className="form-label">
             release Date
