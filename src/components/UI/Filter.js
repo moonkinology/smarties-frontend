@@ -101,9 +101,9 @@ function Filter() {
             aria-label="Close"
           ></button>
         </div>
-        <div className="offcanvas-body  ">
+        <div className="offcanvas-body">
           <form onSubmit={(e) => submitHandler(e)}>
-            <div className="d-flex justify-content-center m-3 gap-3">
+            <div className="d-flex justify-content-center  gap-3">
               <div className="col-2">
                 <label htmlFor="platform" className="form-label mb-3">
                   Platform
