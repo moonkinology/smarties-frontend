@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SmartphoneCard from "./SmartphoneCard";
 import Search from "../UI/Search";
+import Filter from "../UI/Filter";
 import axios from "axios";
 import useFirestore from "../../hooks/UseFirestore";
 import { storage, firestore, timestamp } from "../../firebase/config";
@@ -36,14 +37,16 @@ function Smartphones() {
 
   cardData.map((data) => console.log("xx: " + data.platform));
   return (
-    <React.Fragment>
+    <div className="d-flex justify-content-center m-2 gap-2">
       <Search />
+
+      <Filter />
       <div>
         {cardData.map((data) => (
           <SmartphoneCard key={data.id} info={data} />
         ))}
       </div>
-    </React.Fragment>
+    </div>
   );
 }
 
