@@ -1,6 +1,20 @@
 import React from "react";
 import SmartphoneDetails from "./SmartphoneDetails";
-function SmartphoneCard() {
+function SmartphoneCard(props) {
+  const {
+    id,
+    platform,
+    model,
+    mainCamera,
+    selfieCamera,
+    battery,
+    memory,
+    ram,
+    description,
+    manufacturer,
+    frontImageUrl,
+  } = props.info;
+
   return (
     <div>
       <div className="card" style={{ width: " 18rem" }}>
@@ -10,12 +24,13 @@ function SmartphoneCard() {
           alt="..."
         />
         <div className="card-body">
-          <h5 className="card-title">Card title</h5>
+          <h5 className="card-title">
+            {manufacturer} - {platform} : {model}
+          </h5>
           <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            {mainCamera} Megapixel Front camera , {memory} / {ram}.
           </p>
-          <SmartphoneDetails />
+          <SmartphoneDetails id={id} />
         </div>
       </div>
     </div>
