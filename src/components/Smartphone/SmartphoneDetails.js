@@ -1,7 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DetailsMain from "./DetailsMain";
-import MoreDetailsModal from "./MoreDetailsModal";
-function SmartphoneDetails() {
+import axios from "axios";
+
+function SmartphoneDetails({ id }) {
+  const moreDetailsCancelTokenSource = axios.CancelToken.source();
+  const [moreDetails, setMoreDetails] = useState([]);
+  const [moreDetailsError, setMoreDetailsError] = useState();
+
+  async function fetchMoreDetails() {
+    await axios({
+      method: "get",
+      url: `http://localhost:8080/sped/${id}`,
+      cancelToken: moreDetailsCancelTokenSource.token,
+    }).then(
+      (response) => {
+        setMoreDetails(response.data);
+        console.log(moreDetails);
+      },
+      (error) => {
+        console.log("error");
+        setMoreDetailsError(error);
+      }
+    );
+  }
+
+  useEffect(() => {
+    fetchMoreDetails();
+    return () => {
+      moreDetailsCancelTokenSource.cancel();
+    };
+  }, []);
+
   return (
     <div>
       {/* A JSX comment */}
@@ -11,7 +40,7 @@ function SmartphoneDetails() {
         id="detailsModalToggle"
         aria-hidden="true"
         aria-labelledby="detailsModalToggleLabel"
-        tabindex="-1"
+        tabIndex="-1"
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -28,7 +57,7 @@ function SmartphoneDetails() {
             </div>
             <div className="modal-body">
               <div>
-                <DetailsMain />
+                <DetailsMain id={id} />
               </div>
             </div>
             <div className="modal-footer">
@@ -59,7 +88,7 @@ function SmartphoneDetails() {
         id="moreDetailsModalToggle"
         aria-hidden="true"
         aria-labelledby="moreDetailsModalToggle"
-        tabindex="-1"
+        tabIndex="-1"
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -79,16 +108,20 @@ function SmartphoneDetails() {
               <table className="table table-striped">
                 <tbody>
                   <tr>
-                    <th>1</th>
-                    <td>Mark</td>
+                    <th>Color</th>
+                    <td>{moreDetails.color}</td>
                   </tr>
                   <tr>
-                    <th>2</th>
-                    <td>Jacob</td>
+                    <th>Price Category</th>
+                    <td>{moreDetails.priceCategory}</td>
                   </tr>
                   <tr>
-                    <th>3</th>
-                    <td>Larry the Bird</td>
+                    <th>Display Type</th>
+                    <td>{moreDetails.displayType}</td>
+                  </tr>
+                  <tr>
+                    <th>Description</th>
+                    <td>{moreDetails.description}</td>
                   </tr>
                 </tbody>
               </table>
@@ -114,7 +147,7 @@ function SmartphoneDetails() {
         id="reviewsModalToggle"
         aria-hidden="true"
         aria-labelledby="reviewsModalToggle"
-        tabindex="-1"
+        tabIndex="-1"
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
