@@ -5,12 +5,14 @@ import { Link, useHistory } from "react-router-dom";
 function SignUp() {
   const emailRef = useRef();
   const pwRef = useRef();
+  const usernameRef = useRef();
   const pwConfirmationRef = useRef();
   const { signUp, currentUser } = useAuth();
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const [success, setSuccess] = useState();
   const history = useHistory();
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (pwRef.current.value !== pwConfirmationRef.current.value) {
@@ -31,8 +33,8 @@ function SignUp() {
       }, 1000);
     } catch (e) {
       setError("Failed to create an account.\n" + e.message);
-      setLoading(false);
     }
+    setLoading(false);
   }
   return (
     <div className="text-center form-signin my-5">
@@ -64,7 +66,19 @@ function SignUp() {
             required
             ref={emailRef}
           />
-          <label htmlFor="signUpEmail">Email Address</label>
+          <label htmlFor="signUpEmail">E-Mail Address</label>
+        </div>
+
+        <div className="form-floating">
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            ref={usernameRef}
+            placeholder="username"
+            required
+          />
+          <label htmlFor="username">Username</label>
         </div>
 
         <div className="form-floating">
