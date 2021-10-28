@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DetailsMain from "./DetailsMain";
 import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 function SmartphoneDetails({ id }) {
   const moreDetailsCancelTokenSource = axios.CancelToken.source();
   const [moreDetails, setMoreDetails] = useState([]);
   const [moreDetailsError, setMoreDetailsError] = useState();
-
+  const { currentUser } = useAuth();
   async function fetchMoreDetails() {
     await axios({
       method: "get",
@@ -165,8 +166,29 @@ function SmartphoneDetails({ id }) {
 
             <div className="modal-body">
               <p>Here comes a comment section</p>
-            </div>
 
+              {currentUser && (
+                <button
+                  className="btn btn-danger m-2"
+                  data-bs-target="#detailsModalToggle"
+                  data-bs-toggle="modal"
+                  data-bs-dismiss="modal"
+                >
+                  like
+                </button>
+              )}
+
+              {currentUser && (
+                <button
+                  className="btn btn-success"
+                  data-bs-target="#detailsModalToggle"
+                  data-bs-toggle="modal"
+                  data-bs-dismiss="modal"
+                >
+                  dislike
+                </button>
+              )}
+            </div>
             <div className="modal-footer">
               <button
                 className="btn btn-warning"
