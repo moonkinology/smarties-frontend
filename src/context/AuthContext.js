@@ -26,9 +26,8 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     // the  onAuthStateChanged returns a method. when we call this, it unsubscribes onAuthStateChanged event
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log(user);
-      setLoading(false);
       setCurrentUser(user);
+      setLoading(false);
     });
 
     //unsubscribe from this listener when we unmount this component

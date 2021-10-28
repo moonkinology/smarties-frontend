@@ -13,29 +13,28 @@ function SignUp() {
   const [success, setSuccess] = useState();
   const history = useHistory();
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     if (pwRef.current.value !== pwConfirmationRef.current.value) {
       return setError("Passwords do not match");
     }
 
-    //sign up is async ==> try catch
-    try {
-      setError("");
-      setLoading(true);
-      await signUp(emailRef.current.value, pwRef.current.value);
-      //when we have a user, by default is true
-      setLoading(false);
-      setSuccess("Account successfully created for " + currentUser.email);
-      setTimeout(function () {
-        setSuccess("");
-        history.push("/");
-      }, 1000);
-    } catch (e) {
-      setError("Failed to create an account.\n" + e.message);
-    }
+    signUp(emailRef.current.value, pwRef.current.value)
+      .then((userCredential) => {
+        setLoading(false);
+        setSuccess("Account successfully created for " + userCredential.email);
+        console.log(userCredential);
+        setTimeout(function () {
+          setSuccess("");
+          history.push("/");
+        }, 1000);
+      })
+      .catch((error) => {
+        setError("Failed to create an account.\n" + error.message);
+      });
     setLoading(false);
   }
+
   return (
     <div className="text-center form-signin my-5">
       <form onSubmit={handleSubmit}>
