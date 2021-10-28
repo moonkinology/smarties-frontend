@@ -14,7 +14,7 @@ function DetailsMain({ id }) {
     }).then(
       (response) => {
         setDetails(response.data);
-        console.log(details);
+        console.log("details" + details);
       },
       (error) => {
         console.log("error");
@@ -25,6 +25,7 @@ function DetailsMain({ id }) {
 
   useEffect(() => {
     fetchDetails();
+    console.log(details.mainCamera);
 
     return () => {
       detailsCancelTokenSource.cancel();
@@ -35,13 +36,11 @@ function DetailsMain({ id }) {
     <div className="container">
       <div className="row">
         <div className="col-6">
-          <table className="table">
-            <img
-              src="https://www.telekom.de/resources/images/655284/samsung-galaxy-s21-5g-phantom-gray-vorne.png"
-              className="d-block w-100"
-              alt="..."
-            />
-          </table>
+          <img
+            src="https://www.telekom.de/resources/images/655284/samsung-galaxy-s21-5g-phantom-gray-vorne.png"
+            className="d-block w-100"
+            alt="..."
+          />
         </div>
 
         <table className="table col-6">
@@ -67,7 +66,7 @@ function DetailsMain({ id }) {
             </tr>
             <tr>
               <th scope="row">Front Camera</th>
-              <td colSpan="2">{details.frontCamera}</td>
+              <td colSpan="2">{details.selfieCamera}</td>
             </tr>
             <tr>
               <th scope="row">Battery (mAh)</th>
