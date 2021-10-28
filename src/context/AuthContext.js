@@ -12,6 +12,7 @@ export function AuthProvider({ children }) {
     //returns a promise
     return auth.createUserWithEmailAndPassword(email, password);
   }
+
   function login(email, password) {
     //returns a promise
     return auth.signInWithEmailAndPassword(email, password);
@@ -25,8 +26,9 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     // the  onAuthStateChanged returns a method. when we call this, it unsubscribes onAuthStateChanged event
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+      console.log(user);
       setLoading(false);
+      setCurrentUser(user);
     });
 
     //unsubscribe from this listener when we unmount this component
