@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase/config";
+import { updateProfile } from "firebase/auth";
 const AuthContext = React.createContext();
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -23,9 +24,22 @@ export function AuthProvider({ children }) {
     return auth.signOut();
   }
 
+  function setUsername(username, photoURL) {
+    return updateProfile(auth.currentUser, {
+      displayName: username,
+      photoURL: "https://example.com/jane-q-user/profile.jpg",
+    });
+  }
+  function setProfilePicture(photoURL) {
+    return updateProfile(auth.currentUser, {
+      photoURL: "https://example.com/jane-q-user/profile.jpg",
+    });
+  }
   useEffect(() => {
     // the  onAuthStateChanged returns a method. when we call this, it unsubscribes onAuthStateChanged event
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) console.log(user);
+      if (user) console.log(user.uid);
       setCurrentUser(user);
       setLoading(false);
     });
@@ -40,6 +54,8 @@ export function AuthProvider({ children }) {
     signUp,
     login,
     logout,
+    setUsername,
+    setProfilePicture
   };
   return (
     <div>
