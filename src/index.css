@@ -22,3 +22,7 @@
   width: 200px;
   object-fit: contain;
 }
+.platformIcon {
+  width: 25px;
+  height: 25px;
+}
