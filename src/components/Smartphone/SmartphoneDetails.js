@@ -15,18 +15,75 @@ function SmartphoneDetails({ id }) {
       cancelToken: moreDetailsCancelTokenSource.token,
     }).then(
       (response) => {
-        setMoreDetails(response.data);
         console.log(moreDetails);
       },
       (error) => {
         console.log("error");
-        setMoreDetailsError(error);
       }
     );
   }
 
+  async function fetchVotes() {
+    const vote = {
+      type: true,
+      ownerId: id,
+      voterId: currentUser,
+      receiverType: "c",
+    };
+    try {
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:8080/vt/s/id=${id}`,
+        data: vote,
+      });
+      console.log("votes resp: " + JSON.stringify(response.data));
+    } catch (error) {
+      console.log("error while fetching votes:" + error);
+    }
+  }
+
+  async function handleLike() {
+    const vote = {
+      type: true,
+      ownerId: id,
+      voterId: currentUser,
+      receiverType: "c",
+    };
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:8080/vt",
+        data: vote,
+      });
+      console.log("repone post like:" + response.data);
+    } catch (error) {
+      console.log("post like:" + error);
+    }
+  }
+
+  async function handleDislike() {
+    const vote = {
+      type: true,
+      ownerId: id,
+      voterId: currentUser,
+      receiverType: "c",
+    };
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:8080/vt",
+        data: vote,
+      });
+      console.log("repone post dislike:" + response.data);
+    } catch (error) {
+      console.log(" post dislike:" + error);
+    }
+  }
+
   useEffect(() => {
+    fetchVotes();
     fetchMoreDetails();
+    console.log(currentUser?.uid);
     return () => {
       moreDetailsCancelTokenSource.cancel();
     };
@@ -173,6 +230,7 @@ function SmartphoneDetails({ id }) {
                   data-bs-target="#detailsModalToggle"
                   data-bs-toggle="modal"
                   data-bs-dismiss="modal"
+                  onClick={handleLike}
                 >
                   like
                 </button>
@@ -184,6 +242,7 @@ function SmartphoneDetails({ id }) {
                   data-bs-target="#detailsModalToggle"
                   data-bs-toggle="modal"
                   data-bs-dismiss="modal"
+                  onClick={handleDislike}
                 >
                   dislike
                 </button>
