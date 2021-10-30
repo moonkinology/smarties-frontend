@@ -7,7 +7,7 @@ function SignUp() {
   const pwRef = useRef();
   const usernameRef = useRef();
   const pwConfirmationRef = useRef();
-  const { signUp, currentUser } = useAuth();
+  const { signUp, currentUser, setUsername } = useAuth();
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const [success, setSuccess] = useState();
@@ -22,6 +22,7 @@ function SignUp() {
     signUp(emailRef.current.value, pwRef.current.value)
       .then((userCredential) => {
         setLoading(false);
+        updateProfile();
         setSuccess("Account successfully created for " + userCredential.email);
         console.log(userCredential);
         setTimeout(function () {
@@ -33,6 +34,16 @@ function SignUp() {
         setError("Failed to create an account.\n" + error.message);
       });
     setLoading(false);
+  }
+
+  async function updateProfile() {
+    try {
+      await setUsername(usernameRef.current.value);
+      setLoading(false);
+      setSuccess("Username successfully set");
+    } catch (error) {
+      setError("Failed to set username.\n" + error.message);
+    }
   }
 
   return (
