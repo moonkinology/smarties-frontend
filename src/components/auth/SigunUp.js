@@ -13,27 +13,34 @@ function SignUp() {
   const [success, setSuccess] = useState();
   const history = useHistory();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (pwRef.current.value !== pwConfirmationRef.current.value) {
       return setError("Passwords do not match");
     }
 
-    signUp(emailRef.current.value, pwRef.current.value)
-      .then((userCredential) => {
-        setLoading(false);
-        updateProfile();
-        setSuccess("Account successfully created for " + userCredential.email);
-        console.log(userCredential);
-        setTimeout(function () {
-          setSuccess("");
-          history.push("/");
-        }, 1000);
-      })
-      .catch((error) => {
-        setError("Failed to create an account.\n" + error.message);
-      });
-    setLoading(false);
+    await handleSignUp();
+    await updateProfile();
+  }
+
+  async function handleSignUp() {
+    try {
+      const userCredential = await signUp(
+        emailRef.current.value,
+        pwRef.current.value
+      );
+      setLoading(false);
+      setSuccess("Account successfully created for " + userCredential.email);
+      console.log(userCredential);
+      setTimeout(function () {
+        setSuccess("");
+        history.push("/");
+      }, 1000);
+    } catch (error) {
+      setError("Failed to create an account.\n" + error.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function updateProfile() {
