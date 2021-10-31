@@ -1,6 +1,7 @@
 import React from "react";
 import SmartphoneDetails from "./SmartphoneDetails";
-
+import Info from "./Info";
+import { useParams, Link } from "react-router-dom";
 function SmartphoneCard(props) {
   const {
     id,
@@ -35,19 +36,30 @@ function SmartphoneCard(props) {
       );
     }
   };
+
+  // <Info id={id} />
   return (
-    <div>
+    <div className="d-flex justify-content-center">
       <div className="card" style={{ height: "450px" }}>
         <img src={frontImageUrl} className="card-img-top" alt="image" />
         <div className="card-body">
-          <h5 className="card-title d-flex align-items-start">
-            {setPlatformIcon(platform)} {manufacturer} : {model}
-          </h5>
+          <h3 className="card-title d-flex align-items-center">
+            {setPlatformIcon(platform)}
+          </h3>
+          <h3 className="card-title d-flex align-items-center">
+            {manufacturer} {model}
+          </h3>
 
           <p className="card-text">
-            {mainCamera} Megapixel Front camera , {memory} / {ram}.
+            <h5>
+              {mainCamera} Megapixel Front camera , {memory} / {ram}.
+            </h5>
           </p>
-          <SmartphoneDetails id={id} />
+          <div className=" justify-content-center">
+            <Link to={`/smartphoneInfo/${id}`}>
+              <button className="btn btn-success ">Read More</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
