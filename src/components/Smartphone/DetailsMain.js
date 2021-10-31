@@ -25,8 +25,6 @@ function DetailsMain({ id }) {
 
   useEffect(() => {
     fetchDetails();
-    console.log(details.mainCamera);
-
     return () => {
       detailsCancelTokenSource.cancel();
     };

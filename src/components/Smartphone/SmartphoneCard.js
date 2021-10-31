@@ -37,7 +37,7 @@ function SmartphoneCard(props) {
   };
   return (
     <div>
-      <div className="card" style={{ width: " 18rem" }}>
+      <div className="card ">
         <img
           src="https://www.telekom.de/resources/images/655284/samsung-galaxy-s21-5g-phantom-gray-vorne.png"
           className="card-img-top"
