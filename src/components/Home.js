@@ -9,14 +9,15 @@ function Home() {
   return (
     <div className=" ">
       <Carousel />
-
-      <button
-        type="button"
-        onClick={handleExplore}
-        className=" btn btn-primary  justify-content-center"
-      >
-        Explore Smartphones
-      </button>
+      <div className="d-flex justify-content-center">
+        <button
+          type="button"
+          onClick={handleExplore}
+          className=" btn btn-primary  justify-content-center"
+        >
+          Explore Smartphones
+        </button>
+      </div>
     </div>
   );
 }
