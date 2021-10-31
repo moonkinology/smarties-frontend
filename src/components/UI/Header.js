@@ -42,14 +42,17 @@ function Header() {
               to="/"
               className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
             >
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/872/872601.png"
-                className="bi me-2"
-                width="40"
-                height="32"
-                role="img"
-                aria-label="Bootstrap"
-              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-exclude icon-red"
+                viewBox="0 0 16 16"
+                style={{ color: "black" }}
+              >
+                <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm12 2H5a1 1 0 0 0-1 1v7h7a1 1 0 0 0 1-1V4z" />
+              </svg>
             </NavLink>
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li>
