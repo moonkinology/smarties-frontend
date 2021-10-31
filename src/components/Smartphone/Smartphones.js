@@ -44,8 +44,8 @@ function Smartphones() {
       </div>
       <div className="row mt-5">
         {cardData.map((data) => (
-          <div className="col-sm-4 mb-5">
-            <SmartphoneCard key={data.id} info={data} />
+          <div key={data.id} className="col-12 col-md-6 col-xl-4 col- mb-5">
+            <SmartphoneCard info={data} />
           </div>
         ))}
       </div>
