@@ -37,8 +37,8 @@ function SmartphoneCard(props) {
   };
   return (
     <div>
-      <div className="card ">
-        <img src={frontImageUrl} className="card-img-top" alt="..." />
+      <div className="card" style={{ height: "450px" }}>
+        <img src={frontImageUrl} className="card-img-top" alt="image" />
         <div className="card-body">
           <h5 className="card-title d-flex align-items-start">
             {setPlatformIcon(platform)} {manufacturer} : {model}
