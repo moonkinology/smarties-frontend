@@ -47,7 +47,7 @@ function SmartphoneDetails({ id }) {
       type: true,
       ownerId: id,
       voterId: currentUser,
-      receiverType: "c",
+      receiverType: "s",
     };
     try {
       const response = await axios({
@@ -63,11 +63,12 @@ function SmartphoneDetails({ id }) {
 
   async function handleDislike() {
     const vote = {
-      type: true,
+      type: false,
       ownerId: id,
-      voterId: currentUser,
-      receiverType: "c",
+      voterId: currentUser.uid,
+      receiverType: "s",
     };
+
     try {
       const response = await axios({
         method: "post",
@@ -152,7 +153,7 @@ function SmartphoneDetails({ id }) {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="moreDetailsModalToggle">
-                Modal 2
+                More Details
               </h5>
               <button
                 type="button"
