@@ -35,7 +35,6 @@ function Smartphones() {
     };
   }, []);
 
-  cardData.map((data) => console.log("xx: " + data.platform));
   return (
     <div className="d-flex justify-content-center m-2 gap-2">
       <Search />
