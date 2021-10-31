@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+
 function Review() {
   const { id } = useParams();
 
   const votesCancelTokenSource = axios.CancelToken.source();
 
   const [voteCounts, setVoteCounts] = useState([]);
+
+  const [voteError, setVoteError] = useState();
   const { currentUser } = useAuth();
 
   function handleVote(type, id) {
@@ -27,7 +30,23 @@ function Review() {
         console.log("repone post like:" + response.data);
         fetchVotes(id);
       })
-      .catch((error) => console.log("post like:" + error));
+      .catch((error) => {
+        console.log("post like:" + error);
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+        if (error.response.status === 409) {
+          setVoteError({
+            msg: "You've already voted for this Smartphone and can't change your vote at the moment. Please try again later.",
+            title: "Error!",
+          });
+          setTimeout(function () {
+            setVoteError();
+          }, 3000);
+        }
+      });
   }
 
   function fetchVotes(id) {
@@ -40,7 +59,6 @@ function Review() {
         setVoteCounts(response.data);
         console.log("voteCounts " + voteCounts);
       })
-
       .catch((error) => console.log("error while fetching votes:" + error));
   }
 
@@ -55,6 +73,12 @@ function Review() {
     <div>
       <div className="modal-body m-1">
         <p>Here comes a comment section</p>
+        {voteError && (
+          <div className="alert alert-danger" role="alert">
+            {voteError.msg}
+          </div>
+        )}
+
         <div className="d-flex align-items-end justify-content-end d-grid gap-4 ">
           <button
             type="button"

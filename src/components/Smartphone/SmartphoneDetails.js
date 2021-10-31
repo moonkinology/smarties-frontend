@@ -11,6 +11,25 @@ function SmartphoneDetails({ id }) {
 
   const [moreDetailsError, setMoreDetailsError] = useState();
   const { currentUser } = useAuth();
+  function handleVote(type, id) {
+    const vote = {
+      type: type,
+      ownerId: id,
+      voterId: currentUser.uid,
+      receiverType: "s",
+    };
+
+    axios({
+      method: "post",
+      url: "http://localhost:8080/vt",
+      data: vote,
+    })
+      .then((response) => {
+        console.log("repone post like:" + response.data);
+        fetchVotes(id);
+      })
+      .catch((error) => console.log("post like:" + error));
+  }
   async function fetchMoreDetails() {
     await axios({
       method: "get",
@@ -270,7 +289,7 @@ function SmartphoneDetails({ id }) {
                   data-bs-target="#detailsModalToggle"
                   data-bs-toggle="modal"
                   data-bs-dismiss="modal"
-                  onClick={handleVote(true, id)}
+                  onClick={() => handleVote(true, id)}
                 >
                   like
                 </button>
@@ -282,7 +301,7 @@ function SmartphoneDetails({ id }) {
                   data-bs-target="#detailsModalToggle"
                   data-bs-toggle="modal"
                   data-bs-dismiss="modal"
-                  onClick={handleVote(false, id)}
+                  onClick={() => handleVote(false, id)}
                 >
                   dislike
                 </button>
