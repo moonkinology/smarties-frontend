@@ -51,7 +51,7 @@ function DetailsMain({ id }) {
         <table className="table col-6">
           <thead>
             <tr>
-              <th scope="col" colSpan="6" class="text-center">
+              <th scope="col" colSpan="6" className="text-center">
                 Important Features
               </th>
             </tr>
