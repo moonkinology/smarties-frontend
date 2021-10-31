@@ -270,7 +270,7 @@ function SmartphoneDetails({ id }) {
                   data-bs-target="#detailsModalToggle"
                   data-bs-toggle="modal"
                   data-bs-dismiss="modal"
-                  onClick={handleLike}
+                  onClick={handleVote(true, id)}
                 >
                   like
                 </button>
@@ -282,7 +282,7 @@ function SmartphoneDetails({ id }) {
                   data-bs-target="#detailsModalToggle"
                   data-bs-toggle="modal"
                   data-bs-dismiss="modal"
-                  onClick={handleDislike}
+                  onClick={handleVote(false, id)}
                 >
                   dislike
                 </button>
