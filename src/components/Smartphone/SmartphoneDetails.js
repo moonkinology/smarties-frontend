@@ -26,22 +26,6 @@ function SmartphoneDetails({ id }) {
     );
   }
 
-  function fetchVotes() {
-    axios({
-      method: "GET",
-      url: `http://localhost:8080/vt/c-s/${id}`,
-      cancelToken: votesCancelTokenSource.token,
-    })
-      .then((response) => {
-        setVoteCounts(response.data);
-        console.log("vt " + voteCounts);
-        console.log(`of ${id} : ${response.data}`);
-      })
-      .catch((error) => {
-        console.log("error while fetching votes:" + error);
-      });
-  }
-
   async function handleLike() {
     const vote = {
       type: true,
@@ -81,11 +65,23 @@ function SmartphoneDetails({ id }) {
     }
   }
 
-  useEffect(() => {
-    fetchVotes();
+  async function fetchVotes(id) {
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `http://localhost:8080/vt/c-s/${id}`,
+        cancelToken: votesCancelTokenSource.token,
+      });
+      setVoteCounts(data);
+      console.log("voteCounts " + voteCounts);
+    } catch (error) {
+      console.log("error while fetching votes:" + error);
+    }
+  }
 
-    console.log(voteCounts);
-    fetchMoreDetails();
+  useEffect(() => {
+    fetchMoreDetails(id);
+    fetchVotes(id);
     return () => {
       moreDetailsCancelTokenSource.cancel();
       votesCancelTokenSource.cancel();
@@ -107,7 +103,7 @@ function SmartphoneDetails({ id }) {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="detailsModalToggleLabel">
-                Modal 1
+                {id}
               </h5>
               <button
                 type="button"
@@ -305,16 +301,15 @@ function SmartphoneDetails({ id }) {
           </div>
         </div>
       </div>
-      <div className="">
-        <a
-          className="btn btn-success position-absolute bottom-0 start-50 translate-middle-x  mb-2"
-          data-bs-toggle="modal"
-          href="#detailsModalToggle"
-          role="button"
-        >
-          read more
-        </a>
-      </div>
+
+      <a
+        className="btn btn-success position-absolute bottom-0 start-50 translate-middle-x  m-2"
+        data-bs-toggle="modal"
+        href="#detailsModalToggle"
+        role="button"
+      >
+        read more
+      </a>
     </div>
   );
 }
