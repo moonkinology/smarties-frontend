@@ -10,8 +10,8 @@ function Smartphones() {
   const [cardData, setCardData] = useState([]);
   const [error, setError] = useState();
   const cancelTokenSource = axios.CancelToken.source();
-  async function fetchData() {
-    await axios({
+  function fetchData() {
+    axios({
       method: "get",
       url: "http://localhost:8080/spc/all",
       cancelToken: cancelTokenSource.token,
@@ -36,13 +36,17 @@ function Smartphones() {
   }, []);
 
   return (
-    <div className="d-flex justify-content-center m-2 gap-2">
-      <Search />
+    <div className="container">
+      <div className="d-flex justify-content-center m-2 gap-2">
+        <Search />
 
-      <Filter />
-      <div>
+        <Filter />
+      </div>
+      <div className="row mt-5">
         {cardData.map((data) => (
-          <SmartphoneCard key={data.id} info={data} />
+          <div className="col-sm-4 mb-5">
+            <SmartphoneCard key={data.id} info={data} />
+          </div>
         ))}
       </div>
     </div>
