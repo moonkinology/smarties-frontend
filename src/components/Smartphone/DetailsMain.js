@@ -35,8 +35,15 @@ function DetailsMain({ id }) {
       <div className="row">
         <div className="col-6">
           <img
-            src="https://www.telekom.de/resources/images/655284/samsung-galaxy-s21-5g-phantom-gray-vorne.png"
-            className="d-block w-100"
+            src={details.frontImageUrl}
+            className="d-block w-100  "
+            alt="..."
+          />
+        </div>
+        <div className="col-6">
+          <img
+            src={details.backImageUrl}
+            className="d-block w-100  "
             alt="..."
           />
         </div>
@@ -44,7 +51,7 @@ function DetailsMain({ id }) {
         <table className="table col-6">
           <thead>
             <tr>
-              <th scope="col" colSpan="6">
+              <th scope="col" colSpan="6" class="text-center">
                 Important Features
               </th>
             </tr>

@@ -38,11 +38,7 @@ function SmartphoneCard(props) {
   return (
     <div>
       <div className="card ">
-        <img
-          src="https://www.telekom.de/resources/images/655284/samsung-galaxy-s21-5g-phantom-gray-vorne.png"
-          className="card-img-top"
-          alt="..."
-        />
+        <img src={frontImageUrl} className="card-img-top" alt="..." />
         <div className="card-body">
           <h5 className="card-title d-flex align-items-start">
             {setPlatformIcon(platform)} {manufacturer} : {model}
