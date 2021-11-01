@@ -29,6 +29,7 @@ function Review() {
       .then((response) => {
         console.log("repone post like:" + response.data);
         fetchVotes(id);
+        console.log("vt cnts" + response);
       })
       .catch((error) => {
         console.log("post like:" + error);
@@ -37,7 +38,7 @@ function Review() {
           console.log(error.response.status);
           console.log(error.response.headers);
         }
-        if (error.response.status === 409) {
+        if (error.response.status === 409 || error.response.status === 417) {
           setVoteError({
             msg: "You've already voted for this Smartphone and can't change your vote at the moment. Please try again later.",
             title: "Error!",
@@ -62,6 +63,16 @@ function Review() {
       .catch((error) => console.log("error while fetching votes:" + error));
   }
 
+  function showNotLoggedInError() {
+    setVoteError({
+      msg: "You need to be logged in to be able to submit your vote",
+      title: "Error!",
+    });
+    setTimeout(function () {
+      setVoteError();
+    }, 3000);
+  }
+
   useEffect(() => {
     fetchVotes(id);
     return () => {
@@ -82,6 +93,11 @@ function Review() {
         <div className="d-flex align-items-end justify-content-end d-grid gap-4 ">
           <button
             type="button"
+            onClick={
+              currentUser
+                ? () => handleVote(true, id)
+                : () => showNotLoggedInError()
+            }
             className="btn btn-outline-success position-relative"
           >
             <svg
@@ -101,6 +117,11 @@ function Review() {
           </button>
           <button
             type="button"
+            onClick={
+              currentUser
+                ? () => handleVote(false, id)
+                : () => showNotLoggedInError()
+            }
             className="btn btn-outline-danger position-relative"
           >
             <svg
@@ -119,30 +140,6 @@ function Review() {
             </span>
           </button>
         </div>
-
-        {currentUser && (
-          <button
-            className="btn btn-danger m-2"
-            data-bs-target="#detailsModalToggle"
-            data-bs-toggle="modal"
-            data-bs-dismiss="modal"
-            onClick={() => handleVote(true, id)}
-          >
-            like
-          </button>
-        )}
-
-        {currentUser && (
-          <button
-            className="btn btn-success"
-            data-bs-target="#detailsModalToggle"
-            data-bs-toggle="modal"
-            data-bs-dismiss="modal"
-            onClick={() => handleVote(false, id)}
-          >
-            dislike
-          </button>
-        )}
       </div>
     </div>
   );

@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 
-function Filter() {
+function Filter({ filterCallback }) {
   const [formData, setFormData] = useState({
-    platform: "",
-    priceCategory: "",
-    brand: "",
+    platform: null,
+    priceCategory: null,
+    brand: null,
   });
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const handleFilter = () => {
+    console.log(formData);
+
+    filterCallback(formData);
   };
 
   const platforms = [
@@ -74,6 +76,9 @@ function Filter() {
       value: "Huawei",
     },
   ];
+  useEffect(() => {
+    handleFilter();
+  }, [formData]);
   return (
     <div>
       <button
@@ -102,7 +107,7 @@ function Filter() {
           ></button>
         </div>
         <div className="offcanvas-body">
-          <form onSubmit={(e) => submitHandler(e)}>
+          <form>
             <div className="d-flex justify-content-center  gap-3">
               <div className="col-2">
                 <label htmlFor="platform" className="form-label mb-3">
