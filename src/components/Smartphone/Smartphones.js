@@ -60,7 +60,21 @@ function Smartphones() {
     }
   };
 
+  const applySearch = (searchTerm) => {
+    const search = searchTerm.toLowerCase();
+    console.log(search);
+
+    const data = cardData.filter(
+      (data) =>
+        data.manufacturer.toLowerCase() === search ||
+        data.platform.toLowerCase() === search
+    );
+
+    console.log(data);
+    SetFilter((prev) => !prev);
+    setFilteredData(data);
   };
+
   useEffect(() => {
     fetchData();
 
@@ -72,7 +86,7 @@ function Smartphones() {
   return (
     <div className="container">
       <div className="d-flex justify-content-center m-2 gap-2">
-        <Search />
+        <Search searchCallback={applySearch} />
 
         <Filter filterCallback={applyFilter} />
       </div>
