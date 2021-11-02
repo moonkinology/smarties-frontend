@@ -15,6 +15,10 @@ function Filter({ filterCallback }) {
 
   const platforms = [
     {
+      label: "",
+      value: "",
+    },
+    {
       label: "iOS",
       value: "iOS",
     },
@@ -26,19 +30,27 @@ function Filter({ filterCallback }) {
 
   const prices = [
     {
-      value: "0",
-      label: "Budget",
+      value: "",
+      label: "",
     },
     {
       value: "1",
-      label: "Mid-Range",
+      label: "Budget",
     },
     {
       value: "2",
+      label: "Mid-Range",
+    },
+    {
+      value: "3",
       label: "High-End",
     },
   ];
   const options = [
+    {
+      label: "",
+      value: "",
+    },
     {
       label: "Apple",
       value: "Apple",
@@ -126,7 +138,6 @@ function Filter({ filterCallback }) {
                     });
                   }}
                 >
-                  <option defaultValue></option>
                   {platforms.map((platform) => (
                     <option key={platform.value} defaultValue={platform.value}>
                       {platform.label}
@@ -147,11 +158,12 @@ function Filter({ filterCallback }) {
                   onChange={(e) => {
                     setFormData({
                       ...formData,
-                      priceCategory: e.target.value,
+                      priceCategory: prices
+                        .filter((price) => price.label === e.target.value)
+                        .at(0).value,
                     });
                   }}
                 >
-                  <option defaultValue></option>
                   {prices.map((price) => (
                     <option key={price.value} defaultValue={price.value}>
                       {price.label}
@@ -176,7 +188,6 @@ function Filter({ filterCallback }) {
                     });
                   }}
                 >
-                  <option defaultValue></option>
                   {options.map((option) => (
                     <option key={option.value} defaultValue={option.value}>
                       {option.label}

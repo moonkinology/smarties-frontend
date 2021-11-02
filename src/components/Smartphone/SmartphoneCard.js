@@ -9,6 +9,7 @@ function SmartphoneCard(props) {
     model,
     mainCamera,
     selfieCamera,
+    priceCategory,
     battery,
     memory,
     ram,

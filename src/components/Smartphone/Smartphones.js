@@ -12,6 +12,7 @@ function Smartphones() {
   const [error, setError] = useState();
   const [filter, SetFilter] = useState(true);
   const cancelTokenSource = axios.CancelToken.source();
+
   function fetchData() {
     axios({
       method: "get",
@@ -45,18 +46,55 @@ function Smartphones() {
       );
       SetFilter((prev) => !prev);
       setFilteredData(data);
-    }
-    if (platform && brand) {
+      console.log("platform && brand && priceCategory");
+    } else if (platform && brand) {
       const data = cardData.filter(
-        (data) => data.platform === platform && brand && data.brand === brand
+        (data) =>
+          data.platform === platform && brand && data.manufacturer === brand
       );
       SetFilter((prev) => !prev);
       setFilteredData(data);
-    }
-    if (platform) {
+      console.log("platform && brand");
+    } else if (platform && priceCategory) {
+      const data = cardData.filter(
+        (data) =>
+          data.platform === platform &&
+          brand &&
+          data.priceCategory === priceCategory
+      );
+      SetFilter((prev) => !prev);
+      setFilteredData(data);
+      console.log("platform && priceCategory");
+    } else if (priceCategory && brand) {
+      const data = cardData.filter(
+        (data) =>
+          data.priceCategory === priceCategory &&
+          brand &&
+          data.manufacturer === brand
+      );
+      SetFilter((prev) => !prev);
+      setFilteredData(data);
+      console.log("priceCategory && brand");
+    } else if (platform) {
       const data = cardData.filter((data) => data.platform === platform);
       SetFilter((prev) => !prev);
       setFilteredData(data);
+      console.log("platform");
+    } else if (brand) {
+      const data = cardData.filter((data) => data.manufacturer === brand);
+      SetFilter((prev) => !prev);
+      setFilteredData(data);
+      console.log("brand");
+    } else if (priceCategory) {
+      const data = cardData.filter(
+        (data) => data.priceCategory.toString() === priceCategory.toString()
+      );
+      SetFilter((prev) => !prev);
+      setFilteredData(data);
+      console.log("priceCategory");
+    } else {
+      setFilteredData(cardData);
+      console.log("no filter");
     }
   };
 
