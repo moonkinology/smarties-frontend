@@ -102,15 +102,20 @@ function Smartphones() {
     const search = searchTerm.toLowerCase();
     console.log(search);
 
-    const data = cardData.filter(
-      (data) =>
-        data.manufacturer.toLowerCase() === search ||
-        data.platform.toLowerCase() === search
-    );
+    if (search && search !== "") {
+      const data = cardData.filter(
+        (data) =>
+          data.manufacturer.toLowerCase() === search ||
+          data.platform.toLowerCase() === search
+      );
 
-    console.log(data);
-    SetFilter((prev) => !prev);
-    setFilteredData(data);
+      console.log(data);
+      SetFilter((prev) => !prev);
+      setFilteredData(data);
+    } else {
+      SetFilter((prev) => !prev);
+      setFilteredData(cardData);
+    }
   };
 
   useEffect(() => {
