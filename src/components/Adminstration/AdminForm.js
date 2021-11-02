@@ -3,6 +3,7 @@ import Uploader from "./Uploader";
 import axios from "axios";
 import useFirestore from "../../hooks/UseFirestore";
 import { storage, firestore, timestamp } from "../../firebase/config";
+import Brands from "../../data/Brands";
 
 function AdminForm() {
   const [frontImageUrl, setFirstFileUrl] = useState("");
@@ -44,44 +45,7 @@ function AdminForm() {
     });
   };
 
-  const options = [
-    {
-      label: "Apple",
-      value: "Apple",
-    },
-    {
-      label: "Samsung",
-      value: "Samsung",
-    },
-    {
-      label: "Sony",
-      value: "Sony",
-    },
-    {
-      label: "Honor",
-      value: "Honor",
-    },
-    {
-      label: "Nokia",
-      value: "Nokia",
-    },
-    {
-      label: "RealMe",
-      value: "RealMe",
-    },
-    {
-      label: "Xiaomi",
-      value: "Xiaomi",
-    },
-    {
-      label: "OnePlus",
-      value: "OnePlus",
-    },
-    {
-      label: "Huawei",
-      value: "Huawei",
-    },
-  ];
+  const options = Brands;
 
   const { docs } = useFirestore("images");
   const [firstFileKey, setFirstFileKey] = useState("");
@@ -501,7 +465,6 @@ function AdminForm() {
               });
             }}
           >
-            <option defaultValue></option>
             {options.map((option) => (
               <option key={option.value} defaultValue={option.value}>
                 {option.label}
