@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import Comments from "../Smartphone/Comments";
 
 function Review() {
   const { id } = useParams();
@@ -82,8 +83,10 @@ function Review() {
 
   return (
     <div>
-      <div className="modal-body m-1">
-        <p>Here comes a comment section</p>
+      <div>
+        <div className="comments d-flex align-items-center flex-column">
+          <Comments />
+        </div>
         {voteError && (
           <div className="alert alert-danger" role="alert">
             {voteError.msg}
