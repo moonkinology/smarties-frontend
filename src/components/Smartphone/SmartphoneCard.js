@@ -41,7 +41,7 @@ function SmartphoneCard(props) {
   // <Info id={id} />
   return (
     <div className="d-flex justify-content-center">
-      <div className="card" style={{ height: "450px" }}>
+      <div className="card">
         <img src={frontImageUrl} className="card-img-top" alt="image" />
         <div className="card-body">
           <h3 className="card-title d-flex align-items-center">
