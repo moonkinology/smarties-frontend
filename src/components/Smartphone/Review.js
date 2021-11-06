@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Comments from "../Smartphone/Comments";
+import CommentForm from "./CommentForm";
 
 function Review() {
   const { id } = useParams();
@@ -84,8 +85,12 @@ function Review() {
   return (
     <div>
       <div>
+        <div>
+          <CommentForm />
+        </div>
+
         <div className="comments d-flex align-items-center flex-column">
-          <Comments />
+          <Comments id="comment" />
         </div>
         {voteError && (
           <div className="alert alert-danger" role="alert">
