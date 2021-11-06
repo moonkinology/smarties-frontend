@@ -7,15 +7,15 @@ function CommentForm() {
   const commentInputRef = useRef("");
   const { currentUser } = useAuth();
   const [commentError, setCommentError] = useState();
-  const [comments, setComments] = useState([]);
+
   const submitCommentCancelTokenSource = axios.CancelToken.source();
-  const fetchCommentCancelTokenSource = axios.CancelToken.source();
+
   function handleComment(id) {
     console.log(commentInputRef.current.value);
     const cmt = {
       content: commentInputRef.current.value,
       smartphoneId: id,
-      writerId: currentUser.uid,
+      writerId: currentUser.displayName,
       parentId: null,
       receiverType: "s",
       submissionTime: null,
@@ -29,7 +29,6 @@ function CommentForm() {
       data: cmt,
     })
       .then((response) => {
-        fetchComments(id);
         console.log(id);
         console.log(response.status);
       })
@@ -44,20 +43,6 @@ function CommentForm() {
       });
   }
 
-  function fetchComments(id) {
-    /*
-    axios({
-      method: "get",
-      url: `http://localhost:8080/vt/c-s/${id}`,
-      cancelToken: fetchCommentCancelTokenSource.token,
-    })
-      .then((response) => {
-        setComments(response.data);
-      })
-      .catch((error) => console.log("error while fetching votes:" + error));
-  
-    */
-  }
   function showNotLoggedInError() {
     setCommentError({
       msg: "You need to be logged in to be able to submit your comment!",
@@ -69,10 +54,9 @@ function CommentForm() {
   }
 
   useEffect(() => {
-    fetchComments(id);
+    console.log(currentUser);
     return () => {
       submitCommentCancelTokenSource.cancel();
-      fetchCommentCancelTokenSource.cancel();
     };
   }, []);
 
