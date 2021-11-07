@@ -69,22 +69,23 @@ function Comment({ content, author, id, votes }) {
   }, []);
   //like, dislike, reply, show replies for each comment !
   return (
-    <div className="row">
+    <div className="row form-control">
       {voteError && (
         <div className="alert alert-danger" role="alert">
           {voteError.msg}
         </div>
       )}
-      <div className="row justify-content-center">
+      <div className="row align-items-center justify-content-center">
         <img
-          className="col-2 m-1 img-responsive img-thumbnail rounded float-start "
+          className="col-2 m-1  img-responsive img-thumbnail rounded float-start "
           rowSpan="2"
           src={"https://picsum.photos/200"}
           style={styleObj}
         />
 
-        <div className="col-9">
-          {author} :<p>{content}</p>
+        <div className="col-9 ">
+          <p className="text-uppercase font-monospace">{author}:</p>
+          <p className="border border-warning p-2 text-break">{content}</p>
         </div>
       </div>
 

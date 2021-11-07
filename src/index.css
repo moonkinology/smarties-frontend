@@ -35,3 +35,7 @@
   height: 15vw;
   object-fit: contain;
 }
+p {
+  word-break: break-all;
+  white-space: normal;
+}
