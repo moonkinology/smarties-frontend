@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
-function Comment({ content, author, id, votes }) {
+function Comment({ content, author, id, votes, img }) {
   const { currentUser } = useAuth();
 
   const submitVoteCancelTokenSource = axios.CancelToken.source();
+
+  const styleObj = {
+    width: "100px",
+    height: "100px",
+  };
 
   const [voteError, setVoteError] = useState();
 
@@ -57,20 +62,31 @@ function Comment({ content, author, id, votes }) {
 
   useEffect(() => {
     console.log(votes);
+
+    console.log("image: " + img);
     return () => {
       submitVoteCancelTokenSource.cancel();
     };
   }, []);
   //like, dislike, reply, show replies for each comment !
   return (
-    <div className=" row">
+    <div className="row">
       {voteError && (
         <div className="alert alert-danger" role="alert">
           {voteError.msg}
         </div>
       )}
-      <div className="col-12">
-        {author} :<p>{content}</p>
+      <div className="row justify-content-center">
+        <img
+          className="col-2 m-1 img-responsive img-thumbnail rounded float-start "
+          rowSpan="2"
+          src = {img}
+          style={styleObj}
+        />
+
+        <div className="col-9">
+          {author} :<p>{content}</p>
+        </div>
       </div>
 
       <div className="d-flex align-items-end justify-content-end d-grid gap-4 ">
