@@ -85,20 +85,19 @@ function Review() {
   return (
     <div>
       <div>
-        <div>
-          <CommentForm />
-        </div>
+        <CommentForm />
+      </div>
 
-        <div className="comments d-flex align-items-center flex-column">
-          <Comments id="comment" />
-        </div>
+      <div>
         {voteError && (
           <div className="alert alert-danger" role="alert">
             {voteError.msg}
           </div>
         )}
-
-        <div className="d-flex align-items-end justify-content-end d-grid gap-4 ">
+        <h2 className="col-12 d-flex align-items-end justify-content-center d-grid mb-5">
+          Users' Feedbacks
+        </h2>
+        <div className="d-flex align-items-end justify-content-center d-grid gap-4 ">
           <button
             type="button"
             onClick={
@@ -148,6 +147,10 @@ function Review() {
             </span>
           </button>
         </div>
+      </div>
+
+      <div className="comments d-flex align-items-center flex-column">
+        <Comments id="comment" />
       </div>
     </div>
   );
