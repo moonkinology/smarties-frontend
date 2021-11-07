@@ -14,7 +14,7 @@ function Comments() {
       try {
         const result = await axios({
           method: "get",
-          url: `http://localhost:8080/cmt-sp/${id}`,
+          url: `http://localhost:8080/cmt-sp-detailed/${id}`,
           cancelToken: fetchCommentCancelTokenSource.token,
         });
         console.log("cmt res: " + result.data);
@@ -24,18 +24,23 @@ function Comments() {
       }
     }
     fetchComments(id);
-    console.log(comments);
+
     return () => {
       fetchCommentCancelTokenSource.cancel();
     };
   }, []);
 
   return (
-    <div className="container">
-      <div className="row mt-5">
+    <div className="container d-flex justify-content-center">
+      <div className="row mt-5 d-flex align-items-end justify-content-center">
         {comments.map((comment) => (
-          <div key={comment.id} className="col-12 col-md-6 col-xl-4 col- mb-5">
-            <Comment content={comment.content} author={comment.writer} />
+          <div key={comment.id} className="col-8 mb-5">
+            <Comment
+              content={comment.content}
+              author={comment.writer}
+              id={comment.id}
+              votes={comment.votes}
+            />
           </div>
         ))}
       </div>
