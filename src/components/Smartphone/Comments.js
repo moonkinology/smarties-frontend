@@ -17,7 +17,7 @@ function Comments() {
       try {
         const result = await axios({
           method: "get",
-          url: " https://picsum.photos/v2/list",
+          url: "https://picsum.photos/v2/list?page=2&limit=100",
           cancelToken: fetchRandomImagesCancelTokenSource.token,
         });
         console.log(result.data);
