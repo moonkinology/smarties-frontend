@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
-function Comment({ content, author, id, votes, img }) {
+function Comment({ content, author, id, votes }) {
   const { currentUser } = useAuth();
 
   const submitVoteCancelTokenSource = axios.CancelToken.source();
@@ -63,7 +63,6 @@ function Comment({ content, author, id, votes, img }) {
   useEffect(() => {
     console.log(votes);
 
-    console.log("image: " + img);
     return () => {
       submitVoteCancelTokenSource.cancel();
     };
@@ -80,7 +79,7 @@ function Comment({ content, author, id, votes, img }) {
         <img
           className="col-2 m-1 img-responsive img-thumbnail rounded float-start "
           rowSpan="2"
-          src = {img}
+          src={"https://picsum.photos/200"}
           style={styleObj}
         />
 
