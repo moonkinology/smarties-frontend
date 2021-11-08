@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 function CommentForm() {
   const { id } = useParams();
   const commentInputRef = useRef("");
   const { currentUser } = useAuth();
   const [commentError, setCommentError] = useState();
+  const history = useHistory();
 
   const submitCommentCancelTokenSource = axios.CancelToken.source();
 
@@ -31,6 +33,9 @@ function CommentForm() {
       .then((response) => {
         console.log(id);
         console.log(response.status);
+        setTimeout(function () {
+          history.go(0);
+        }, 1000);
       })
       .catch((error) => {
         setCommentError({
