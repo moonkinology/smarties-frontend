@@ -8,6 +8,7 @@ function CommentForm() {
   const commentInputRef = useRef("");
   const { currentUser } = useAuth();
   const [commentError, setCommentError] = useState();
+  const [submissionVerification, setSubmissionVerification] = useState();
   const history = useHistory();
 
   const submitCommentCancelTokenSource = axios.CancelToken.source();
@@ -33,6 +34,8 @@ function CommentForm() {
       .then((response) => {
         console.log(id);
         console.log(response.status);
+        setSubmissionVerification("Your comment is successfully submitted.");
+        commentInputRef.current.value = "";
         setTimeout(function () {
           history.go(0);
         }, 1000);
@@ -70,6 +73,11 @@ function CommentForm() {
       {commentError && (
         <div className="alert alert-danger" role="alert">
           {commentError.msg}
+        </div>
+      )}
+      {submissionVerification && (
+        <div className="alert alert-success" role="alert">
+          {submissionVerification}
         </div>
       )}
       <div className="mb-3">
