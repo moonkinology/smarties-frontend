@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Comments from "../Smartphone/Comments";
-import CommentForm from "./CommentForm";
 
 function Review() {
   const { id } = useParams();
@@ -12,7 +11,7 @@ function Review() {
 
   const [voteCounts, setVoteCounts] = useState([]);
 
-  const [voteError, setVoteError] = useState();
+  const [voteError, setVoteError] = useState("");
   const { currentUser } = useAuth();
 
   function handleVote(type, id) {
@@ -84,10 +83,6 @@ function Review() {
 
   return (
     <div>
-      <div>
-        <CommentForm />
-      </div>
-
       <div>
         {voteError && (
           <div className="alert alert-danger" role="alert">

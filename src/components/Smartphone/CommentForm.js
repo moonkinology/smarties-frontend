@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-function CommentForm() {
+function CommentForm({ reviewCallback }) {
   const { id } = useParams();
   const commentInputRef = useRef("");
   const { currentUser } = useAuth();
   const [commentError, setCommentError] = useState();
   const [submissionVerification, setSubmissionVerification] = useState();
-  const history = useHistory();
 
   const submitCommentCancelTokenSource = axios.CancelToken.source();
 
@@ -37,7 +36,8 @@ function CommentForm() {
         setSubmissionVerification("Your comment is successfully submitted.");
         commentInputRef.current.value = "";
         setTimeout(function () {
-          history.go(0);
+          reviewCallback({ stateChange: true });
+          setSubmissionVerification("");
         }, 1000);
       })
       .catch((error) => {

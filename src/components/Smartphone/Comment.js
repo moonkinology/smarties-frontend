@@ -75,7 +75,7 @@ function Comment({ content, author, id, votes }) {
           {voteError.msg}
         </div>
       )}
-      <div className="row align-items-center justify-content-center">
+      <div className="row  align-items-center justify-content-center">
         <img
           className="col-2 m-1  img-responsive img-thumbnail rounded float-start "
           rowSpan="2"
