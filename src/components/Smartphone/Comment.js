@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CommentForm from "./CommentForm";
 import ReplyModal from "./ReplyModal";
 import { useAuth } from "../../context/AuthContext";
 function Comment({ content, author, id, votes }) {
@@ -97,12 +96,8 @@ function Comment({ content, author, id, votes }) {
 
       <div className="d-flex align-items-end justify-content-end d-grid gap-4 ">
         {/* reply button */}
+        <ReplyModal id={id} submissionCallBack={setReplySubmissinCallBack} />
 
-        <ReplyModal
-          modalId={id.toString()}
-          parentId={id}
-          submissionCallBack={setReplySubmissinCallBack}
-        />
         {/* Like button */}
         <button
           type="button"
