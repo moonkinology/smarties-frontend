@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-function CommentForm({ reviewCallback }) {
+function CommentForm({ reviewCallback, label, receiverId }) {
   const { id } = useParams();
   const commentInputRef = useRef("");
   const { currentUser } = useAuth();
@@ -13,13 +13,15 @@ function CommentForm({ reviewCallback }) {
   const submitCommentCancelTokenSource = axios.CancelToken.source();
 
   function handleComment(id) {
+    let type = label === "reply" ? "c" : "s";
+    let parent = receiverId === undefined ? null : receiverId;
     console.log(commentInputRef.current.value);
     const cmt = {
       content: commentInputRef.current.value,
       smartphoneId: id,
       writerId: currentUser.displayName,
-      parentId: null,
-      receiverType: "s",
+      parentId: parent,
+      receiverType: type,
       submissionTime: null,
       votes: null,
     };
@@ -33,7 +35,9 @@ function CommentForm({ reviewCallback }) {
       .then((response) => {
         console.log(id);
         console.log(response.status);
-        setSubmissionVerification("Your comment is successfully submitted.");
+        setSubmissionVerification(
+          `Your ${label} is successfully submitted ${parent}.`
+        );
         commentInputRef.current.value = "";
         setTimeout(function () {
           reviewCallback({ stateChange: true });
@@ -42,7 +46,7 @@ function CommentForm({ reviewCallback }) {
       })
       .catch((error) => {
         setCommentError({
-          msg: "You've already voted for this Smartphone and can't change your vote at the moment. Please try again later.",
+          msg: `Could not receive your ${label}. Please try again later.`,
           title: "Error!",
         });
         setTimeout(function () {
@@ -81,7 +85,9 @@ function CommentForm({ reviewCallback }) {
         </div>
       )}
       <div className="mb-3">
-        <label htmlFor="exampleFormControlTextarea1">Write a new comment</label>
+        <label htmlFor="exampleFormControlTextarea1">
+          Write a new {label} to {receiverId}
+        </label>
         <textarea
           ref={commentInputRef}
           className="form-control"

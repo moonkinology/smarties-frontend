@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import CommentForm from "./CommentForm";
+import ReplyModal from "./ReplyModal";
 import { useAuth } from "../../context/AuthContext";
 function Comment({ content, author, id, votes }) {
   const { currentUser } = useAuth();
-
+  const [replySubmissinCallBack, setReplySubmissinCallBack] = useState({});
   const submitVoteCancelTokenSource = axios.CancelToken.source();
 
   const styleObj = {
@@ -70,11 +72,14 @@ function Comment({ content, author, id, votes }) {
   //like, dislike, reply, show replies for each comment !
   return (
     <div className="row form-control">
+      {/* Error   */}
       {voteError && (
         <div className="alert alert-danger" role="alert">
           {voteError.msg}
         </div>
       )}
+
+      {/* Content Area */}
       <div className="row  align-items-center justify-content-center">
         <img
           className="col-2 m-1  img-responsive img-thumbnail rounded float-start "
@@ -84,12 +89,21 @@ function Comment({ content, author, id, votes }) {
         />
 
         <div className="col-9 ">
+          <p className="text-uppercase font-monospace">{id}:</p>
           <p className="text-uppercase font-monospace">{author}:</p>
           <p className="border border-warning p-2 text-break">{content}</p>
         </div>
       </div>
 
       <div className="d-flex align-items-end justify-content-end d-grid gap-4 ">
+        {/* reply button */}
+
+        <ReplyModal
+          modalId={id.toString()}
+          parentId={id}
+          submissionCallBack={setReplySubmissinCallBack}
+        />
+        {/* Like button */}
         <button
           type="button"
           onClick={
@@ -114,6 +128,7 @@ function Comment({ content, author, id, votes }) {
             <span className="visually-hidden">unread messages</span>
           </span>
         </button>
+        {/* Dislike button */}
         <button
           type="button"
           onClick={
