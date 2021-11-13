@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReplyModal from "./ReplyModal";
+import Replies from "./Replies";
 import { useAuth } from "../../context/AuthContext";
-function Comment({ content, author, id, votes }) {
+function Comment({ content, author, id, votes, replyCount }) {
   const { currentUser } = useAuth();
   const [replySubmissinCallBack, setReplySubmissinCallBack] = useState({});
+  const [replyState, setReplyState] = useState(true);
   const submitVoteCancelTokenSource = axios.CancelToken.source();
+
+  const [replies, setReplies] = useState([]);
 
   const styleObj = {
     width: "100px",
@@ -67,7 +71,7 @@ function Comment({ content, author, id, votes }) {
     return () => {
       submitVoteCancelTokenSource.cancel();
     };
-  }, []);
+  }, [replyState]);
   //like, dislike, reply, show replies for each comment !
   return (
     <div className="row form-control">
@@ -95,7 +99,15 @@ function Comment({ content, author, id, votes }) {
       </div>
 
       <div className="d-flex align-items-end justify-content-end d-grid gap-4 ">
-        {/* reply button */}
+        {/** show replies button */}
+        <Replies
+          replyCount={replyCount}
+          id={id}
+          currentReplyState={replyState}
+          clickCallBack={setReplyState}
+          fetchReplyCallback={setReplies}
+        />
+        {/* send reply button */}
         <ReplyModal id={id} submissionCallBack={setReplySubmissinCallBack} />
 
         {/* Like button */}
@@ -148,6 +160,24 @@ function Comment({ content, author, id, votes }) {
             <span className="visually-hidden">unread messages</span>
           </span>
         </button>
+      </div>
+
+      <div>
+        <div className="row mt-4 col-12 d-flex align-items-end justify-content-center">
+          <div style={{ display: replyState === !true ? "block" : "none" }}>
+            {replies.map((reply) => (
+              <div key={reply.id} className=" mb-5 reply">
+                <Comment
+                  content={reply.content}
+                  author={reply.writer}
+                  id={reply.id}
+                  votes={reply.votes}
+                  replyCount={reply.replyCounts}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

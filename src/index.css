@@ -39,3 +39,10 @@ p {
   word-break: break-all;
   white-space: normal;
 }
+
+.comment{
+  background-color: rgb(0, 212, 240)
+}
+.reply{
+  background-color: rgb(25, 77, 112)
+}

@@ -45,17 +45,16 @@ function Comments() {
       </div>
 
       <div className="container d-flex justify-content-center">
-        <div className="row mt-5 d-flex align-items-end justify-content-center">
+        <div className="row mt-5 d-flex align-items-end justify-content-center ">
           {comments.map((comment) => (
-            <div key={comment.id} className="col-8 mb-5">
+            <div key={comment.id} className="col-11 mb-5 comment">
               <Comment
                 content={comment.content}
                 author={comment.writer}
                 id={comment.id}
                 votes={comment.votes}
+                replyCount={comment.replyCounts}
               />
-
-           
             </div>
           ))}
         </div>
