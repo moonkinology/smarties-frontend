@@ -98,21 +98,79 @@ function Info() {
   return (
     <div className="container">
       <div className="row d-flex justify-content-center">
-        <div className="col-6">
-          <img
-            src={details.frontImageUrl}
-            className="d-block w-100  "
-            alt="..."
-          />
+        <div
+          id="myCarousel"
+          className="carousel slide col-8 "
+          data-bs-ride="carousel"
+        >
+          <div className="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#myCarousel"
+              data-bs-slide-to="0"
+              className="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#myCarousel"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+          </div>
+          <div className="carousel-inner">
+            <div className="carousel-item active frame">
+              <img
+                src={details.frontImageUrl}
+                className="d-block w-100 bd-placeholder-img  "
+                alt="..."
+              />
+            </div>
+            <div className="carousel-item frame">
+              <img
+                src={details.backImageUrl}
+                className="d-block w-100 bd-placeholder-img  "
+                alt="..."
+              />
+            </div>
+          </div>
+          <button
+            className="carousel-control-prev"
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide="prev"
+          >
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Previous</span>
+          </button>
+          <button
+            className="carousel-control-next"
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide="next"
+          >
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Next</span>
+          </button>
         </div>
-        <div className="col-6">
-          <img
-            src={details.backImageUrl}
-            className="d-block w-100  "
-            alt="..."
-          />
+
+        <div className="d-flex justify-content-center mb-4 col-12">
+          <Link to={`/smartphoneReview/${id}`}>
+            <button className="btn btn-success justify-content-center ">
+              Read Reviews
+            </button>
+          </Link>
         </div>
-        <div className="col-6 ">
+        <h2 className="row col-12 justify-content-center mb-4 fst-italic">Details</h2>
+
+        <div className="col-8 ">
           <table className="table table-striped justify-content-center">
             <tbody>
               <tr>
@@ -197,13 +255,6 @@ function Info() {
               </tr>
             </tbody>
           </table>
-        </div>
-        <div className="d-flex justify-content-center">
-          <Link to={`/smartphoneReview/${id}`}>
-            <button className="btn btn-success justify-content-center ">
-              Read Reviews
-            </button>
-          </Link>
         </div>
       </div>
     </div>
