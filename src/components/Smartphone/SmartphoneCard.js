@@ -40,27 +40,28 @@ function SmartphoneCard(props) {
 
   // <Info id={id} />
   return (
-    <div className="d-flex justify-content-center">
-      <div className="card">
+    <div className="d-flex justify-content-center  ">
+      <div className="card ">
         <img src={frontImageUrl} className="card-img-top" alt="image" />
         <div className="card-body">
           <div className="fst-italic ">
-            <h3 className="card-title d-flex align-items-center">
-              {setPlatformIcon(platform)}
-            </h3>
-            <h4 className="card-title d-flex align-items-center  d-inline-block text-truncate">
+            <h3 className="card-title  ">{setPlatformIcon(platform)}</h3>
+            <h4 className="card-title  align-items-center  d-inline-block text-truncate">
               {manufacturer} {model}
             </h4>
           </div>
 
           <p className="card-text ">
             <p>
-              {mainCamera} Megapixel, {memory} GB / {ram} GB
+              {mainCamera.replace(/[^0-9]/g, "")} megepixels, {memory} GB /{" "}
+              {ram} GB
             </p>
           </p>
-          <div className=" justify-content-center">
+          <div className=" d-flex   justify-content-center">
             <Link to={`/smartphoneInfo/${id}`}>
-              <button className="btn btn-success ">Read More</button>
+              <button className="btn   btn-outline-success">
+                Read More
+              </button>
             </Link>
           </div>
         </div>
