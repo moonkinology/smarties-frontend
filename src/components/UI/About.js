@@ -101,14 +101,14 @@ function About() {
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
-          <div class="list-group list-group-flush ms-2">
+          <div className="list-group list-group-flush ms-2">
             {technologies.map((option) => (
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 key={option.value}
                 href={option.link}
-                class="list-group-item "
+                className="list-group-item "
                 aria-current="true"
               >
                 {option.label}
@@ -137,7 +137,7 @@ function About() {
           aria-labelledby="headingTwo"
           data-bs-parent="#accordionExample"
         >
-          <ul class="list-group list-group-flush ms-2">
+          <ul className="list-group list-group-flush ms-2">
             {features.map((option) => (
               <li className="list-group-item " key={option.value}>
                 {option.label}
