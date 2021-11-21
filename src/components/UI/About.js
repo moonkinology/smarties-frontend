@@ -101,7 +101,7 @@ function About() {
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
-          <div class="list-group">
+          <div class="list-group list-group-flush ms-2">
             {technologies.map((option) => (
               <a
                 target="_blank"
