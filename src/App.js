@@ -15,7 +15,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/UI/Header";
 
 function App() {
-  const id = 10;
   return (
     <div className="App">
       <div className="container">

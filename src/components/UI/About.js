@@ -78,6 +78,11 @@ function About() {
       label: "Axios",
       link: "https://github.com/axios/axios",
     },
+    {
+      value: "9",
+      label: "tsParticles",
+      link: "https://github.com/matteobruni/tsparticles",
+    },
   ];
 
   return (

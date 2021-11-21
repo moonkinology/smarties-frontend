@@ -34,7 +34,7 @@ function Header() {
     }
   }
   return (
-    <div>
+    <div className="overlay">
       <header className="p-3  ">
         <div className="container">
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
