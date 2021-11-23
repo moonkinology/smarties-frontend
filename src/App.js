@@ -23,7 +23,11 @@ function App() {
             <Header />
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/unauthorized" component={AccessDenied} />
+              <Route
+                path="/unauthorized"
+                component={AccessDenied}
+                className="x"
+              />
               <Route path="/smartphones" component={Smartphones} />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={Login} />
@@ -34,9 +38,9 @@ function App() {
               <Route path="/smartphoneReview/:id">
                 <Review />
               </Route>
-              <ProtectedRoute path="/admin">
+              <Route path="/admin" component={AdminForm}>
                 <AdminForm />
-              </ProtectedRoute>
+              </Route>
               <Route path="/*">
                 <Nothing />
               </Route>
