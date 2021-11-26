@@ -38,9 +38,9 @@ function App() {
               <Route path="/smartphoneReview/:id">
                 <Review />
               </Route>
-              <Route path="/admin" component={AdminForm}>
+              <ProtectedRoute path="/admin">
                 <AdminForm />
-              </Route>
+              </ProtectedRoute>
               <Route path="/*">
                 <Nothing />
               </Route>
