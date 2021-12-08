@@ -1,6 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { Link ,} from "react-router-dom";
+
 function AccessDenied() {
+ 
   return (
     <div
       className="d-flex justify-content-center  position-relative "
@@ -17,3 +20,4 @@ function AccessDenied() {
 }
 
 export default AccessDenied;
+//admin@admin.rx
