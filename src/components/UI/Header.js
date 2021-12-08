@@ -1,12 +1,14 @@
-import React, { use, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useHistory, NavLink } from "react-router-dom";
-
+import axios from "axios";
 function Header() {
   const [error, setError] = useState("");
   const { signUp, currentUser, logout } = useAuth();
   const [loading, setLoading] = useState();
+  const [adminStatus, setAdminStatus] = useState(false);
   const [success, setSuccess] = useState();
+  const fetchAdminStatusCancelTokenSource = axios.CancelToken.source();
 
   const history = useHistory();
   function handleSignUp() {
@@ -15,6 +17,36 @@ function Header() {
   function handleLogin() {
     history.push("/login");
   }
+
+  async function getAdminStatus() {
+    //sign up is async ==> try catch
+    try {
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:8080/user/admin/${currentUser.email}`,
+        cancelToken: fetchAdminStatusCancelTokenSource.token,
+      });
+      setError("");
+      setLoading(true);
+      setAdminStatus(response.data);
+      console.log("Admin status: " + response.data);
+      setLoading(false);
+    } catch (e) {
+      // setError("Failed to get admin status.\n" + e.message);
+      setLoading(false);
+      setTimeout(function () {
+        setError("");
+      }, 3000);
+    }
+  }
+
+  useEffect(() => {
+    if (currentUser) getAdminStatus();
+    console.log(currentUser?.email);
+    return () => {
+      fetchAdminStatusCancelTokenSource.cancel();
+    };
+  }, [currentUser]);
 
   async function handleLogOut() {
     //sign up is async ==> try catch
@@ -26,8 +58,9 @@ function Header() {
       setSuccess("You're now logged out");
       setTimeout(function () {
         setSuccess("");
+        history.go(0);
         history.push("/");
-      }, 1000);
+      }, 500);
     } catch (e) {
       setError("Failed to log out.\n" + e.message);
       setLoading(false);
@@ -65,6 +98,13 @@ function Header() {
                   About
                 </NavLink>
               </li>
+              {adminStatus && (
+                <li>
+                  <NavLink to="/admin" className="nav-link px-2 text-dark">
+                    Adminstration
+                  </NavLink>
+                </li>
+              )}
             </ul>
 
             <div className="text-end">
