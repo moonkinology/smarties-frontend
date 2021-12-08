@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
     return auth.signInWithEmailAndPassword(email, password);
   }
 
-  function logout(email, password) {
+  function logout() {
     //returns a promise
     return auth.signOut();
   }
@@ -27,12 +27,11 @@ export function AuthProvider({ children }) {
   function setUsername(username, photoURL) {
     return updateProfile(auth.currentUser, {
       displayName: username,
-      photoURL: "https://example.com/jane-q-user/profile.jpg",
     });
   }
   function setProfilePicture(photoURL) {
     return updateProfile(auth.currentUser, {
-      photoURL: "https://example.com/jane-q-user/profile.jpg",
+      photoURL: photoURL,
     });
   }
   useEffect(() => {
@@ -55,7 +54,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     setUsername,
-    setProfilePicture
+    setProfilePicture,
   };
   return (
     <div>
