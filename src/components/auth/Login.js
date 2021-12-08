@@ -3,14 +3,16 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 function Login() {
-  const loginEmailRef = useRef();
-  const loginPwRef = useRef();
+  const [email, setEmail] = useState("");
+  const [pw, setPw] = useState("");
 
   const { login, currentUser } = useAuth();
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
+
   const [success, setSuccess] = useState();
   const history = useHistory();
+
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -18,16 +20,22 @@ function Login() {
     try {
       setError("");
       setLoading(true);
-      await login(loginEmailRef.current.value, loginPwRef.current.value);
+      console.log("signing in with " + email);
+      await login(email, pw);
       //when we have a user, by default is true
       setLoading(false);
       setSuccess("You're now logged in as " + currentUser.email);
       setTimeout(function () {
         setSuccess("");
         history.push("/");
-      }, 1000);
+      }, 500);
     } catch (e) {
-      setError("Failed to sign in.\n" + e.message);
+      //setError("Failed to sign in.\n" + e.message);
+      setTimeout(function () {
+        setSuccess("");
+        history.push("/");
+      }, 500);
+      console.log(e);
       setLoading(false);
     }
   }
@@ -60,7 +68,7 @@ function Login() {
             id="loginEmail"
             placeholder="Email address"
             required
-            ref={loginEmailRef}
+            onInput={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="loginEmail">Email address</label>
         </div>
@@ -72,7 +80,7 @@ function Login() {
             id="loginPassword"
             placeholder="Password"
             required
-            ref={loginPwRef}
+            onInput={(e) => setPw(e.target.value)}
           />
           <label htmlFor="loginPassword">Password</label>
         </div>

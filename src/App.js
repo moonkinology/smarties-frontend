@@ -1,6 +1,6 @@
 import SmartphoneCard from "./components/Smartphone/SmartphoneCard";
 import AdminForm from "./components/Adminstration/AdminForm";
-import SignUp from "./components/auth/SigunUp";
+import SignUp from "./components/auth/SignUp";
 import Login from "./components/auth/Login";
 import Home from "./components/Home";
 import Info from "./components/Smartphone/Info";
@@ -38,9 +38,7 @@ function App() {
               <Route path="/smartphoneReview/:id">
                 <Review />
               </Route>
-              <ProtectedRoute path="/admin">
-                <AdminForm />
-              </ProtectedRoute>
+              <Route path="/admin" component={AdminForm} />
               <Route path="/*">
                 <Nothing />
               </Route>
