@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-
+import axios from "axios";
 function SignUp() {
   const emailRef = useRef();
   const pwRef = useRef();
@@ -11,16 +11,85 @@ function SignUp() {
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const [success, setSuccess] = useState();
+  const [wantToBeAdmin, setWantToBeAdmin] = useState(false);
   const history = useHistory();
+
+  const secredCodeRef = useRef();
+  const [safeValidationStatus, setSafeValidationSatus] = useState(false);
+  const secretCTS = axios.CancelToken.source();
+  const registerationCTS = axios.CancelToken.source();
+
+  useEffect(() => {
+    return () => {
+      registerationCTS.cancel();
+      secretCTS.cancel();
+    };
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
     if (pwRef.current.value !== pwConfirmationRef.current.value) {
       return setError("Passwords do not match");
     }
 
     await handleSignUp();
     await updateProfile();
+
+    if (wantToBeAdmin === true) {
+      await validateSecretCode();
+      await registerUserInBackend(safeValidationStatus);
+    }
+
+    setLoading(false);
+  }
+
+  async function registerUserInBackend(adminStatus) {
+    if (currentUser) {
+      const user = {
+        firebaseId: currentUser.uid,
+        firstName: currentUser.displayName,
+        lastName: currentUser.displayName,
+        email: currentUser.email,
+        phone: null,
+        gender: null,
+        isAdmin: adminStatus,
+      };
+      try {
+        await axios({
+          method: "post",
+          url: "http://localhost:8080/user",
+          data: user,
+          cancelToken: registerationCTS.token,
+        });
+        console.log(currentUser.uid + " is now an admin");
+      } catch (error) {
+        console.log("make admin failed:" + error);
+      }
+    }
+  }
+
+  async function validateSecretCode() {
+    try {
+      const result = await axios({
+        method: "get",
+        url: `http://localhost:8080/safe/admin/${secredCodeRef.current.value}`,
+        cancelToken: secretCTS.token,
+      });
+      console.log("secret code is valid " + result.status);
+      if (result.status === 200) {
+        setSafeValidationSatus(true);
+        setSuccess("Validation successful.");
+      }
+    } catch (error) {
+      setLoading(true);
+      setError("Secret is invalid");
+      console.log("error while fetching admin status:" + error);
+      setTimeout(function () {
+        setError("");
+        setLoading(false);
+      }, 1000);
+    }
   }
 
   async function handleSignUp() {
@@ -30,12 +99,12 @@ function SignUp() {
         pwRef.current.value
       );
       setLoading(false);
-      setSuccess("Account successfully created for " + userCredential.email);
-      console.log(userCredential);
+      setSuccess("Account successfully created");
+      console.log("signed up: " + userCredential);
       setTimeout(function () {
         setSuccess("");
         history.push("/");
-      }, 1000);
+      }, 3000);
     } catch (error) {
       setError("Failed to create an account.\n" + error.message);
     } finally {
@@ -44,12 +113,24 @@ function SignUp() {
   }
 
   async function updateProfile() {
+    setLoading(true);
     try {
       await setUsername(usernameRef.current.value);
-      setLoading(false);
-      setSuccess("Username successfully set");
+      setTimeout(function () {
+        setSuccess("Username successfully set");
+      }, 1000);
+      if (safeValidationStatus === true) {
+        setTimeout(function () {
+          setSuccess("Admin privileges successfully granted");
+        }, 1000);
+      }
+      setTimeout(function () {
+        setSuccess("");
+        setLoading(false);
+      }, 1000);
     } catch (error) {
       setError("Failed to set username.\n" + error.message);
+      setLoading(false);
     }
   }
 
@@ -85,7 +166,6 @@ function SignUp() {
           />
           <label htmlFor="signUpEmail">E-Mail Address</label>
         </div>
-
         <div className="form-floating">
           <input
             type="text"
@@ -97,7 +177,6 @@ function SignUp() {
           />
           <label htmlFor="username">Username</label>
         </div>
-
         <div className="form-floating">
           <input
             type="password"
@@ -109,7 +188,6 @@ function SignUp() {
           />
           <label htmlFor="signUpPassword">Password</label>
         </div>
-
         <div className="form-floating">
           <input
             type="password"
@@ -121,13 +199,46 @@ function SignUp() {
           />
           <label htmlFor="passwordConfirmation">Password Confirmation</label>
         </div>
+        <div className="d-flex justify-content-end my-3">
+          <label className="form-check-label  " htmlFor="defaultCheck1">
+            sign-up as admin
+          </label>
 
+          <input
+            className="form-check-input  ms-1 "
+            type="checkbox"
+            id="defaultCheck1"
+            onChange={(e) => {
+              setWantToBeAdmin((prev) => !prev);
+            }}
+            checked={wantToBeAdmin === true}
+          />
+        </div>
+
+        {wantToBeAdmin && (
+          <div className="form-floating mb-3">
+            <input
+              type="password"
+              className="form-control"
+              id="secredCode"
+              placeholder="Password"
+              ref={secredCodeRef}
+            />
+            <label htmlFor="secredCode">Secret Code</label>
+            <button
+              className="btn btn-success m-3"
+              onClick={validateSecretCode}
+            >
+              check & register
+            </button>
+          </div>
+        )}
         <button
           className="w-100 btn btn-lg btn-primary"
           type="submit"
           disabled={loading}
         >
-          Sign up
+          finish Sign-Up
         </button>
         <p className="mt-5 mb-3 text-muted">&copy; Smarties</p>
       </form>
@@ -139,3 +250,4 @@ function SignUp() {
 }
 
 export default SignUp;
+
