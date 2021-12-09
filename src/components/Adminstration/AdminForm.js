@@ -4,7 +4,7 @@ import axios from "axios";
 import useFirestore from "../../hooks/UseAdmin";
 import { storage, firestore, timestamp } from "../../firebase/config";
 import Brands from "../../data/Brands";
-import AccessDenied from "./../UI/AccessDenied";
+import AccessDenied from "../UI/AccessDenied";
 import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 

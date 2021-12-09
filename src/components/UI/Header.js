@@ -68,7 +68,7 @@ function Header() {
   }
   return (
     <div className="overlay">
-      <header className="p-3  ">
+      <header className="p-3">
         <div className="container">
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <NavLink
@@ -142,12 +142,12 @@ function Header() {
             </div>
 
             {error && (
-              <div className="alert alert-danger col-12 mt-4" role="alert">
+              <div className="alert alert-danger col-12 mx-2 mt-4" role="alert">
                 {error}
               </div>
             )}
             {success && (
-              <div className="alert alert-success" role="alert">
+              <div className="alert alert-success mx-2 col-4" role="alert">
                 {success}
               </div>
             )}
