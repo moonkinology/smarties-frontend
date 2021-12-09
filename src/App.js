@@ -2,7 +2,7 @@ import SmartphoneCard from "./components/smartphone/SmartphoneCard";
 import AdminForm from "./components/adminstration/AdminForm";
 import SignUp from "./components/auth/SignUp";
 import Login from "./components/auth/Login";
-import Home from "./components/Home";
+import Home from "./components/UI/Home";
 import Info from "./components/smartphone/Info";
 import Review from "./components/smartphone/Review";
 import About from "./components/UI/About";

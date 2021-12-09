@@ -313,7 +313,7 @@ function AdminForm() {
 
           <div className="col-md-2">
             <label htmlFor="ramInput" className="form-label">
-              ram
+              RAM
             </label>
             <input
               required
@@ -332,7 +332,7 @@ function AdminForm() {
 
           <div className="col-md-2">
             <label htmlFor="memoryInput" className="form-label">
-              meomry
+              Memory
             </label>
             <input
               required
@@ -630,7 +630,7 @@ function AdminForm() {
 
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-primary mb-5"
             disabled={
               formData.frontImageURL === "" || formData.backImageURL === ""
             }

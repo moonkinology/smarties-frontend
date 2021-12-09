@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Link, useHistory, NavLink } from "react-router-dom";
-import Carousel from "./UI/Carousel";
-import Particle from "./UI/Particle";
+import Carousel from "./Carousel";
+import Particle from "./Particle";
 function Home() {
   let history = useHistory();
   const handleExplore = () => {

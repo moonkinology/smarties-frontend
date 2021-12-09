@@ -21,7 +21,7 @@ function About() {
     {
       value: "5",
       label:
-        "Like and Dislike featuer for comments and reviews (Logged-in users only)",
+        "Like and Dislike feature for comments and reviews (Logged-in users only)",
     },
     {
       value: "6",
@@ -29,7 +29,7 @@ function About() {
     },
     {
       value: "7",
-      label: "Filtering Smartphones",
+      label: "Search (Brand & Platform)",
     },
     {
       value: "8",
