@@ -38,6 +38,7 @@ function AdminForm() {
   const [backImageUrl, setSecondFileUrl] = useState("");
   const [formData, setFormData] = useState({
     platform: "Android",
+    osVersion: "",
     model: "",
     color: "#563d7c",
     mainCamera: "",
@@ -123,6 +124,7 @@ function AdminForm() {
   function postSmartphone(imageId) {
     const smartphone = {
       platform: formData.platform,
+      osVersion: formData.osVersion,
       model: formData.model,
       mainCamera: formData.mainCamera,
       selfieCamera: formData.frontCamera,
@@ -230,6 +232,25 @@ function AdminForm() {
                 });
               }}
               title="Choose your color"
+            />
+          </div>
+
+          <div className="col-md-2">
+            <label htmlFor="displaySizeInput" className="form-label">
+              OS Version
+            </label>
+            <input
+              required
+              type="text"
+              className="form-control"
+              id="displaySizeInput"
+              defaultValue={formData.osVersion}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  osVersion: e.target.value,
+                });
+              }}
             />
           </div>
 
