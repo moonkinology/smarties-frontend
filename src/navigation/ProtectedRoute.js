@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-
+import useAdmin from "../hooks/UseAdmin";
 function ProtectedRoute({ children, ...rest }) {
-  let auth = false;
+  const { adminStatus } = useAdmin();
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        auth ? (
+        adminStatus === true ? (
           children
         ) : (
           <Redirect

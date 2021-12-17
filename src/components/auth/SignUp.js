@@ -28,44 +28,46 @@ function SignUp() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true);
-    if (pwRef.current.value !== pwConfirmationRef.current.value) {
-      return setError("Passwords do not match");
-    }
+    try {
+      setLoading(true);
+      if (pwRef.current.value !== pwConfirmationRef.current.value) {
+        return setError("Passwords do not match");
+      }
 
-    await handleSignUp();
-    await updateProfile();
-
-    if (wantToBeAdmin === true) {
-      await validateSecretCode();
+      await handleSignUp();
+      await updateProfile();
       await registerUserInBackend(safeValidationStatus);
-    }
 
-    setLoading(false);
+      setTimeout(function () {
+        setSuccess("");
+        setLoading(false);
+        history.push("/");
+      }, 1000);
+    } catch (error) {
+      console.log("error while handleSubmit : " + error);
+    }
   }
 
   async function registerUserInBackend(adminStatus) {
-    if (currentUser) {
-      const user = {
-        firebaseId: currentUser.uid,
-        firstName: currentUser.displayName,
-        lastName: currentUser.displayName,
-        email: currentUser.email,
-        phone: null,
-        gender: null,
-        isAdmin: adminStatus,
-      };
-      try {
-        await axios({
-          method: "post",
-          url: "http://localhost:8080/user",
-          data: user,
-          cancelToken: registerationCTS.token,
-        });
-        console.log(currentUser.uid + " is now an admin");
-      } catch (error) {
-        console.log("make admin failed:" + error);
-      }
+    const user = {
+      firebaseId: "empty",
+      firstName: "empty",
+      lastName: "empty",
+      email: emailRef.current.value,
+      phone: null,
+      gender: null,
+      isAdmin: adminStatus,
+    };
+    try {
+      await axios({
+        method: "post",
+        url: "http://localhost:8080/user",
+        data: user,
+        cancelToken: registerationCTS.token,
+      });
+      console.log(emailRef.current.validateSecretCode + " is now an admin");
+    } catch (error) {
+      console.log("make admin failed:" + error);
     }
   }
 
@@ -80,6 +82,11 @@ function SignUp() {
       if (result.status === 200) {
         setSafeValidationSatus(true);
         setSuccess("Validation successful.");
+
+        setTimeout(function () {
+          setSuccess("");
+          setLoading(false);
+        }, 3000);
       }
     } catch (error) {
       setLoading(true);
@@ -101,10 +108,6 @@ function SignUp() {
       setLoading(false);
       setSuccess("Account successfully created");
       console.log("signed up: " + userCredential);
-      setTimeout(function () {
-        setSuccess("");
-        history.push("/");
-      }, 3000);
     } catch (error) {
       setError("Failed to create an account.\n" + error.message);
     } finally {
@@ -199,42 +202,48 @@ function SignUp() {
           />
           <label htmlFor="passwordConfirmation">Password Confirmation</label>
         </div>
-        <div className="d-flex justify-content-end my-3">
-          <label className="form-check-label  " htmlFor="defaultCheck1">
-            sign-up as admin
-          </label>
 
-          <input
-            className="form-check-input  ms-1 "
-            type="checkbox"
-            id="defaultCheck1"
-            onChange={(e) => {
-              setWantToBeAdmin((prev) => !prev);
-            }}
-            checked={wantToBeAdmin === true}
-          />
-        </div>
+        {!safeValidationStatus && (
+          <div>
+            <div className="d-flex justify-content-end my-3">
+              <label className="form-check-label  " htmlFor="defaultCheck1">
+                sign-up as admin
+              </label>
 
-        {wantToBeAdmin && (
-          <div className="form-floating mb-3">
-            <input
-              type="password"
-              className="form-control"
-              id="secredCode"
-              placeholder="Password"
-              ref={secredCodeRef}
-            />
-            <label htmlFor="secredCode">Secret Code</label>
-            <button
-              className="btn btn-success m-3"
-              onClick={validateSecretCode}
-            >
-              check & register
-            </button>
+              <input
+                className="form-check-input  ms-1 "
+                type="checkbox"
+                id="defaultCheck1"
+                onChange={(e) => {
+                  setWantToBeAdmin((prev) => !prev);
+                }}
+                checked={wantToBeAdmin === true}
+              />
+            </div>
+
+            {wantToBeAdmin && (
+              <div className="form-floating mb-3">
+                <input
+                  type="password"
+                  className="form-control"
+                  id="secredCode"
+                  placeholder="Password"
+                  ref={secredCodeRef}
+                />
+                <label htmlFor="secredCode">Secret Code</label>
+                <button
+                  type="button"
+                  className="btn btn-success m-3"
+                  onClick={validateSecretCode}
+                >
+                  check & register
+                </button>
+              </div>
+            )}
           </div>
         )}
         <button
-          className="w-100 btn btn-lg btn-primary"
+          className="w-100 btn btn-lg btn-primary mt-3"
           type="submit"
           disabled={loading}
         >
@@ -250,4 +259,3 @@ function SignUp() {
 }
 
 export default SignUp;
-

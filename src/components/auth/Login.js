@@ -24,7 +24,7 @@ function Login() {
       await login(email, pw);
       //when we have a user, by default is true
       setLoading(false);
-      setSuccess("You're now logged in as " + currentUser.email);
+      setSuccess("You're now logged in as " + currentUser?.email);
       setTimeout(function () {
         setSuccess("");
         history.push("/");
