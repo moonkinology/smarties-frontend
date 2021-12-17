@@ -4,6 +4,7 @@ import { Link, useHistory, NavLink } from "react-router-dom";
 import axios from "axios";
 function Header() {
   const [error, setError] = useState("");
+  const [reloaded, setReloaded] = useState(false);
   const { signUp, currentUser, logout } = useAuth();
   const [loading, setLoading] = useState();
   const [adminStatus, setAdminStatus] = useState(false);
@@ -17,17 +18,20 @@ function Header() {
   function handleLogin() {
     history.push("/login");
   }
-
   async function getAdminStatus() {
     //sign up is async ==> try catch
     try {
+      setLoading(true);
       const response = await axios({
         method: "get",
         url: `http://localhost:8080/user/admin/${currentUser.email}`,
         cancelToken: fetchAdminStatusCancelTokenSource.token,
       });
+      console.log("starting admin status request for " + currentUser.email);
       setError("");
-      setLoading(true);
+      if (reloaded === false) {
+    
+      }
       setAdminStatus(response.data);
       console.log("Admin status: " + response.data);
       setLoading(false);
@@ -36,17 +40,17 @@ function Header() {
       setLoading(false);
       setTimeout(function () {
         setError("");
-      }, 3000);
+      }, 500);
     }
   }
-
   useEffect(() => {
-    if (currentUser) getAdminStatus();
+    getAdminStatus();
+
     console.log(currentUser?.email);
     return () => {
       fetchAdminStatusCancelTokenSource.cancel();
     };
-  }, [currentUser]);
+  }, []);
 
   async function handleLogOut() {
     //sign up is async ==> try catch
