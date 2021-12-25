@@ -1,7 +1,7 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import CommentForm from "./CommentForm";
-function ReplyModal({ id, submissionCallBack }) {
+function ReplyModal({ id, replySubmissionCallback }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -31,7 +31,7 @@ function ReplyModal({ id, submissionCallBack }) {
           </Modal.Header>
           <Modal.Body>
             <CommentForm
-              reviewCallback={submissionCallBack}
+              replySubmissionCallback={replySubmissionCallback}
               label={"reply"}
               receiverId={id}
             />

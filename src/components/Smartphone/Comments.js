@@ -7,7 +7,9 @@ import axios from "axios";
 import CommentForm from "./CommentForm";
 function Comments() {
   const [comments, setComments] = useState([]);
-  const [commitSubmissinCallBack, setCommitSubmissinCallBack] = useState({});
+  const [commentSubmissionCallback, setCommentSubmissionCallback] =
+    useState(false);
+  const [replySubmissionCallback, setReplySubmissionCallback] = useState(false);
   const fetchCommentCancelTokenSource = axios.CancelToken.source();
   const fetchRandomImagesCancelTokenSource = axios.CancelToken.source();
 
@@ -33,13 +35,13 @@ function Comments() {
       fetchCommentCancelTokenSource.cancel();
       fetchRandomImagesCancelTokenSource.cancel();
     };
-  }, [commitSubmissinCallBack]);
+  }, [commentSubmissionCallback, replySubmissionCallback]);
 
   return (
     <div>
       <div>
         <CommentForm
-          reviewCallback={setCommitSubmissinCallBack}
+          commentSubmissionCallBack={setCommentSubmissionCallback}
           label={"comment"}
         />
       </div>
@@ -54,6 +56,7 @@ function Comments() {
                 id={comment.id}
                 votes={comment.votes}
                 replyCount={comment.replyCounts}
+                replySubmissionCallback={setReplySubmissionCallback}
               />
             </div>
           ))}

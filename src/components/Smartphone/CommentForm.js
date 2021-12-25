@@ -3,7 +3,12 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-function CommentForm({ reviewCallback, label, receiverId }) {
+function CommentForm({
+  commentSubmissionCallBack,
+  replySubmissionCallback,
+  label,
+  receiverId,
+}) {
   const { id } = useParams();
   const commentInputRef = useRef("");
   const { currentUser } = useAuth();
@@ -39,10 +44,19 @@ function CommentForm({ reviewCallback, label, receiverId }) {
           `Your ${label} is successfully submitted ${parent}.`
         );
         commentInputRef.current.value = "";
-        setTimeout(function () {
-          reviewCallback({ stateChange: true });
-          setSubmissionVerification("");
-        }, 1000);
+
+        if (label === "comment") {
+          setTimeout(function () {
+            commentSubmissionCallBack((previous) => !previous);
+            setSubmissionVerification("");
+          }, 1000);
+        }
+        if (label === "reply") {
+          setTimeout(function () {
+            replySubmissionCallback((previous) => !previous);
+            setSubmissionVerification("");
+          }, 1000);
+        }
       })
       .catch((error) => {
         setCommentError({
