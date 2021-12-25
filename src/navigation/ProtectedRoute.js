@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import useAdmin from "../hooks/UseAdmin";
+import useAdmin from "../hooks/AdminContext";
 function ProtectedRoute({ children, ...rest }) {
   const { adminStatus } = useAdmin();
   return (

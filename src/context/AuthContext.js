@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase/config";
 import { updateProfile } from "firebase/auth";
+import axios from "axios";
 const AuthContext = React.createContext();
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -8,14 +9,33 @@ export const useAuth = () => {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-
+  const fetchAdminStatusCTS = axios.CancelToken.source();
+  const [adminStatus, setAdminStatus] = useState();
   function signUp(email, password) {
     //returns a promise
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
+  async function getAdminStatus(email) {
+    try {
+      const result = await axios({
+        method: "get",
+        url: `http://localhost:8080/user/admin/${email}`,
+        cancelToken: fetchAdminStatusCTS.token,
+      });
+      console.log(result);
+      console.log(result.data);
+      setAdminStatus(result.data);
+      console.log("admin status in auth " + adminStatus);
+    } catch (e) {
+      setAdminStatus(false);
+      console.log("Failed to get admin status.\n" + e);
+    }
+  }
+
   function login(email, password) {
     //returns a promise
+    getAdminStatus(email);
     return auth.signInWithEmailAndPassword(email, password);
   }
 
@@ -50,11 +70,13 @@ export function AuthProvider({ children }) {
   //export
   const value = {
     currentUser,
+    adminStatus,
     signUp,
     login,
     logout,
     setUsername,
     setProfilePicture,
+    getAdminStatus,
   };
   return (
     <div>

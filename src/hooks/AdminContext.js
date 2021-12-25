@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-const useAdmin = () => {
+export const adminContext = createContext(false);
+const AdminContext = () => {
   const { currentUser } = useAuth();
   const [adminStatus, setAdminStatus] = useState(false);
   const fetchAdminStatusCTS = axios.CancelToken.source();
@@ -27,6 +28,6 @@ const useAdmin = () => {
     };
   }, [currentUser]);
 
-  return { adminStatus };
+  return <adminContext.Provider value={adminStatus}></adminContext.Provider>;
 };
-export default useAdmin;
+export default AdminContext;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Uploader from "./Uploader";
 import axios from "axios";
-import useFirestore from "../../hooks/UseAdmin";
+import useFirestore from "../../hooks/AdminContext";
 import { storage, firestore, timestamp } from "../../firebase/config";
 import Brands from "../../data/Brands";
 import AccessDenied from "../UI/AccessDenied";

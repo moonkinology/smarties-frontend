@@ -5,9 +5,10 @@ import axios from "axios";
 function Header() {
   const [error, setError] = useState("");
   const [reloaded, setReloaded] = useState(false);
-  const { signUp, currentUser, logout } = useAuth();
+  const { signUp, currentUser, logout, adminStatus, getAdminStatus } =
+    useAuth();
   const [loading, setLoading] = useState();
-  const [adminStatus, setAdminStatus] = useState(false);
+  // const [adminStatus, setAdminStatus] = useState(false);
   const [success, setSuccess] = useState();
   const fetchAdminStatusCancelTokenSource = axios.CancelToken.source();
 
@@ -18,34 +19,9 @@ function Header() {
   function handleLogin() {
     history.push("/login");
   }
-  async function getAdminStatus() {
-    //sign up is async ==> try catch
-    try {
-      setLoading(true);
-      const response = await axios({
-        method: "get",
-        url: `http://localhost:8080/user/admin/${currentUser.email}`,
-        cancelToken: fetchAdminStatusCancelTokenSource.token,
-      });
-      console.log("starting admin status request for " + currentUser.email);
-      setError("");
-      if (reloaded === false) {
-    
-      }
-      setAdminStatus(response.data);
-      console.log("Admin status: " + response.data);
-      setLoading(false);
-    } catch (e) {
-      // setError("Failed to get admin status.\n" + e.message);
-      setLoading(false);
-      setTimeout(function () {
-        setError("");
-      }, 500);
-    }
-  }
   useEffect(() => {
-    getAdminStatus();
-
+    getAdminStatus(currentUser?.email);
+    console.log("admin status in header " + adminStatus);
     console.log(currentUser?.email);
     return () => {
       fetchAdminStatusCancelTokenSource.cancel();
@@ -62,7 +38,7 @@ function Header() {
       setSuccess("You're now logged out");
       setTimeout(function () {
         setSuccess("");
-        history.go(0);
+        getAdminStatus("empty");
         history.push("/");
       }, 500);
     } catch (e) {
