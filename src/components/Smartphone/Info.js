@@ -8,8 +8,8 @@ function Info() {
   const votesCancelTokenSource = axios.CancelToken.source();
   const [moreDetails, setMoreDetails] = useState([]);
   const [voteCounts, setVoteCounts] = useState([]);
+  const [colorStyle, setColorStyle] = useState({});
   const { currentUser } = useAuth();
-
   const [details, setDetails] = useState([]);
   const [detailsError, setDetailsError] = useState([]);
 
@@ -168,14 +168,26 @@ function Info() {
             </button>
           </Link>
         </div>
-        <h2 className="row col-12 justify-content-center mb-4 fst-italic">Details</h2>
+        <h2 className="row col-12 justify-content-center mb-4 fst-italic">
+          Details
+        </h2>
 
         <div className="col-8 ">
           <table className="table table-striped justify-content-center">
             <tbody>
               <tr>
                 <th>Color</th>
-                <td>{moreDetails.color}</td>
+                <td>
+                  <input
+                    type="color"
+                    className="form-control form-control-color"
+                    id="colorInput"
+                    defaultValue={moreDetails.color}
+                    disabled={true}
+                    onClick={() => {}}
+                    title="Choose your color"
+                  />
+                </td>
               </tr>
               <tr>
                 <th>Price Category</th>
