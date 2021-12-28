@@ -14,7 +14,7 @@ function CommentForm({
   const { currentUser } = useAuth();
   const [commentError, setCommentError] = useState();
   const [submissionVerification, setSubmissionVerification] = useState();
-
+  const history = useHistory();
   const submitCommentCancelTokenSource = axios.CancelToken.source();
 
   function handleComment(id) {
@@ -55,6 +55,7 @@ function CommentForm({
           setTimeout(function () {
             replySubmissionCallback((previous) => !previous);
             setSubmissionVerification("");
+            history.go(0);
           }, 1000);
         }
       })
