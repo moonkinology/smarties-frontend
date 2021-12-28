@@ -22,6 +22,8 @@ function Comment({
     width: "100px",
     height: "100px",
   };
+  const [subReplySubmissionCallback, setSubReplySubmissionCallback] =
+    useState(false);
 
   const [voteError, setVoteError] = useState();
 
@@ -77,7 +79,7 @@ function Comment({
     return () => {
       submitVoteCancelTokenSource.cancel();
     };
-  }, [replyState]);
+  }, [replies, subReplySubmissionCallback]);
   //like, dislike, reply, show replies for each comment !
   return (
     <div className="row form-control">
@@ -180,6 +182,7 @@ function Comment({
                   id={reply.id}
                   votes={reply.votes}
                   replyCount={reply.replyCounts}
+                  replySubmissionCallback={setSubReplySubmissionCallback}
                 />
               </div>
             ))}
