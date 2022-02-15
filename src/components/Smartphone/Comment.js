@@ -3,6 +3,9 @@ import axios from "axios";
 import ReplyModal from "./ReplyModal";
 import Replies from "./Replies";
 import { useAuth } from "../../context/AuthContext";
+
+import { Route, Redirect, useHistory } from "react-router-dom";
+
 function Comment({
   content,
   author,
@@ -11,6 +14,7 @@ function Comment({
   replyCount,
   replySubmissionCallback,
 }) {
+  const history = useHistory();
   const { currentUser } = useAuth();
   const [replySubmissinCallBack, setReplySubmissinCallBack] = useState({});
   const [replyState, setReplyState] = useState(true);
@@ -54,6 +58,7 @@ function Comment({
         console.log("repone post like:" + response.data);
         //   fetchVotes(id); should take care of updating votes after submission
         console.log("vt cnts" + response);
+        history.go(0);
       })
       .catch((error) => {
         console.log("post like:" + error);
