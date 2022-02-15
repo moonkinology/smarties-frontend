@@ -91,7 +91,7 @@ function Comment({
       )}
 
       {/* Content Area */}
-      <div className="row  align-items-center justify-content-center">
+      <div className="row  align-items-center justify-content-center ">
         <img
           className="col-2 m-1  img-responsive img-thumbnail rounded float-start "
           rowSpan="2"
@@ -107,7 +107,7 @@ function Comment({
         </div>
       </div>
 
-      <div className="d-flex align-items-end justify-content-end d-grid gap-4 ">
+      <div className="d-flex align-items-end justify-content-end d-grid m-3 gap-4 ">
         {/** show replies button */}
         <Replies
           replyCount={replyCount}
@@ -152,7 +152,7 @@ function Comment({
               ? () => handleVote(false, id)
               : () => showNotLoggedInError()
           }
-          className="btn btn-outline-danger position-relative"
+          className="btn btn-outline-danger position-relative mx-2 "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +172,7 @@ function Comment({
       </div>
 
       <div>
-        <div className="row mt-4 col-12 d-flex align-items-end justify-content-center">
+        <div className="row mt-4 col-12 d-flex align-items-end justify-content-center ">
           <div style={{ display: replyState === !true ? "block" : "none" }}>
             {replies.map((reply) => (
               <div key={reply.id} className=" mb-5 reply">
