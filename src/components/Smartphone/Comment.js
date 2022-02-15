@@ -106,7 +106,6 @@ function Comment({
         />
 
         <div className="col-9 ">
-          <p className="text-uppercase font-monospace">{id}:</p>
           <p className="text-uppercase font-monospace">{author}:</p>
           <p className="border border-warning p-2 text-break">{content}</p>
         </div>
