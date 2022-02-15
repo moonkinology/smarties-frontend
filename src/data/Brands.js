@@ -39,6 +39,10 @@ const brands = [
     label: "Huawei",
     value: "Huawei",
   },
+  {
+    label: "Google",
+    value: "Google",
+  },
 ];
 
 export default brands;
