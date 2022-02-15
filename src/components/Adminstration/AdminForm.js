@@ -16,12 +16,13 @@ function AdminForm() {
   async function getAdminStatus() {
     //sign up is async ==> try catch
     try {
-      await axios({
+      const result = await axios({
         method: "get",
         url: `http://localhost:8080/user/admin/${currentUser.email}`,
         cancelToken: fetchAdminStatusCTS.token,
       });
-      setAdminStatus(true);
+      console.log("ADMIN STATUS " + result.data);
+      setAdminStatus(result.data);
     } catch (e) {
       console.log("Failed to get admin status.\n" + e);
     }
