@@ -5,10 +5,11 @@ import useFirestore from "../../hooks/AdminContext";
 import { storage, firestore, timestamp } from "../../firebase/config";
 import Brands from "../../data/Brands";
 import AccessDenied from "../UI/AccessDenied";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 function AdminForm() {
+  const history = useHistory();
   const { currentUser } = useAuth();
   const [adminStatus, setAdminStatus] = useState(false);
   const fetchAdminStatusCTS = axios.CancelToken.source();
@@ -114,6 +115,7 @@ function AdminForm() {
       (response) => {
         console.log("image:" + response.data);
         postSmartphone(response.data);
+        history.push("/");
       },
       (error) => {
         console.log("image:" + error);
