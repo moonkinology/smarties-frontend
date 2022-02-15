@@ -38,7 +38,7 @@ function Comments() {
   }, [commentSubmissionCallback, replySubmissionCallback]);
 
   return (
-    <div>
+    <div className="w-100 ">
       <div>
         <CommentForm
           commentSubmissionCallBack={setCommentSubmissionCallback}
@@ -46,7 +46,7 @@ function Comments() {
         />
       </div>
 
-      <div className="container d-flex justify-content-center">
+      <div className="container d-flex justify-content-center ">
         <div className="row mt-5 d-flex align-items-end justify-content-center ">
           {comments.map((comment) => (
             <div key={comment.id} className="col-11 mb-5 comment">
